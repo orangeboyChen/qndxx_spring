@@ -24,16 +24,17 @@
 <body>
 
 <div class="container">
-    <div id="alertDiv" style="height: 60px;position: sticky;z-index: 9999;top:10px;">
+    <div id="alertDiv" style="height: 0px;position: sticky;z-index: 9999;top:10px;display: none;">
         <div class="alert alert-success alert-dismissible fade show" style="position:sticky;" id="alert">
 <%--            <button type="button" class="close" onclick="alertClose()">&times;</button>--%>
             <strong id="alertTitle">操作成功！</strong><br>
             <p id="alertTxt"></p>
         </div>
     </div>
-    <h1>管理端</h1>
     <div class="row">
         <div class="col-md-6">
+            <div style="height: 1rem"></div>
+            <h1>管理端</h1>
             <h5>上次登录时间：${lastTime}</h5>
             <label>当前团支书寄语:</label>
             <input class="form-control" type="text" id="sayingTxt" value="${group.getSaying()}">
@@ -52,14 +53,14 @@
             <div class="doneList">
                 <input type="button" class="btn btn-primary" value="更改信息" id="changeInfo" onclick="showSubmitInfo()"/>
                 <input type="hidden" class="btn btn-primary" value="提交" id="submitInfo" onclick="changeInfo()"/>
-<%--                <input type="button" class="btn btn-secondary" value="修改管理员密码"/>--%>
+                <input type="button" class="btn btn-secondary" value="修改管理员密码" data-toggle="modal" data-target="#changePasswordModal"/>
                 <br><br>
                 <table class="table table-hover" border="0px" width="400px">
-                    <tr><td>学校</td><td>${group.school}</td></tr>
-                    <tr><td>班级</td><td>${group.groupName}</td></tr>
+                    <tr><td>学校</td><td>${group.getSchool()}</td></tr>
+                    <tr><td>班级</td><td>${group.getGroupName()}</td></tr>
                     <tr><td>班级代号</td>
                         <td>
-                            <p id="groupSec">${group.groupSec}</p>
+                            <p id="groupSec">${group.getGroupSec()}</p>
                             <input type="hidden" id="groupSecInput" class="form-control">
                         </td></tr>
                 </table>
@@ -73,7 +74,7 @@
             <div class="doneList">
                 <c:choose>
                     <c:when test="${goodStudents!=null}">
-                        <table class="table table-hover" border="0px" width="400px">
+                        <table class="table table-hover" border="0px" width="400px" id="completedTable">
                             <tr><th>姓名</th><th>时间</th></tr>
                             <c:forEach var="goodStudent" items="${goodStudents}">
                                 <tr><td>${goodStudent.getName()}</td><td>${goodStudent.getTimeStr()}</td></tr>
@@ -81,25 +82,43 @@
                         </table>
                     </c:when>
                     <c:otherwise>
-                        <p>暂未有学生完成</p>
+                        <p id="completedText">暂未有学生完成</p>
                     </c:otherwise>
                 </c:choose>
+                <p id="newCompletedText"></p>
             </div>
         </div>
         <div class="col-md-6 offset-lg-0 offset-md-0">
             <h5>更改名单</h5>
 
             <input class="btn btn-secondary" type="button" name="ck" id="ck" value="全部需要完成" onClick="allRequireYes()">
-<%--            <input class="btn btn-primary" type="submit" value="添加成员">--%>
+            <input class="btn btn-primary" type="button" value="添加成员" id="showAddStudent" data-toggle="collapse" data-target="#addStudent">
+
+            <br>
+            <div id="addStudent" class="collapse">
+                <br>
+                <label for="addStudentId">学号</label>
+                <input class="form-control" type="text" id="addStudentId" onblur="addStudentIdOnblur()">
+                <div id="addStudentIdFeedback"></div>
+
+                <label for="addStudentName">姓名</label>
+                <input class="form-control" type="text" id="addStudentName" onblur="addStudentNameOnblur()">
+                <div id="addStudentNameFeedback"></div><br>
+
+                <input class="btn btn-primary" type="button" value="提交" id="addStudentSubmit" onclick="addSubmit()">
+            </div>
+
 
             <br><br>
-            <table class="table table-hover" border="0px" width="400px">
-                <tr><th>姓名</th><th>是否要求完成</th><th>指令</th></tr>
+            <table class="table table-hover" border="0px" width="400px" id="studentTable">
+                <tr id="tableHead"><th>姓名及学号</th><th>是否要求完成</th><th>指令</th></tr>
                 <c:forEach var="student" items="${studentsList}">
-                    <tr>
+                    <tr name="${student.getId()}">
                         <td>
-                            <p name="${student.getId()}">${student.getName()}</p></td>
-                        <td>
+                            <h6 name="${student.getId()}">${student.getName()}</h6>
+                            <p name="${student.getId()}">${student.getId()}</p>
+                        </td>
+                        <td style="vertical-align: middle;">
                             <div class="btn-group">
                                 <c:choose>
                                     <c:when test="${student.isRequireState()}">
@@ -114,17 +133,17 @@
                                 </c:choose>
                             </div>
                         </td>
-                        <td>
+                        <td style="vertical-align: middle;">
                             <input type="button" class="btn btn-danger" value="删除" name="delete" id="${student.getId()}" onclick="startModal(this)"/>
                         </td>
                     </tr>
                 </c:forEach>
             </table>
-            <input class="btn btn-danger col" type="submit" name="Init" id="button2" value="重置名单">
+<%--            <input class="btn btn-danger col" type="submit" name="Init" id="button2" value="重置名单">--%>
         </div>
         <br>
     </div>
-</div>
+
 <br>
 
 <div class="modal fade" id="makeSureModal">
@@ -143,6 +162,37 @@
             </div>
         </div>
     </div>
+</div>
+
+<div class="modal fade" id="changePasswordModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">修改管理员密码</h4>
+                <button type="button" class="close" data-dismiss="modal" onclick="changePasswordModalCanceled()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <label>班级：${group.getGroupName()}</label><br>
+                    <label>班级代号：${group.getGroupSec()}</label><br>
+                    <label for="oldPassword">原密码：</label>
+                    <input class="form-control" type="password" id="oldPassword" onblur="oldPasswordOnblur()"/>
+                    <div id="oldPasswordFeedback"></div>
+                    <label for="newPassword">新密码：</label>
+                    <input class="form-control" type="password" id="newPassword" onblur="newPasswordOnblur();newPasswordCommittedOnblur()"/>
+                    <div id="newPasswordFeedback"></div>
+                    <label for="newPasswordCommitted">确认新密码：</label>
+                    <input class="form-control" type="password" id="newPasswordCommitted" onblur="newPasswordCommittedOnblur();newPasswordOnblur()"/>
+                    <div id="newPasswordCommittedFeedback"></div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="changePasswordModalCanceled()">返回</button>
+                <button type="button" class="btn btn-danger" onclick="passwordSubmitted()" id="passwordSubmittedBtn">更改密码</button>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 </body>
 </html>

@@ -1,6 +1,5 @@
 package com.orangeboy.service;
 
-import com.orangeboy.dao.GroupDao;
 import com.orangeboy.dao.StudentDao;
 import com.orangeboy.pojo.Group;
 import com.orangeboy.pojo.Student;
@@ -28,21 +27,21 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void setStudentCompleted(Student student){
+        Group group=groupService.queryGroupById(student.getGroupId());
+        student.setRank(getCompletedCount(group)+1);
         setStudentCompleteState(student,true);
         student.setLastCompleteTime(System.currentTimeMillis());
-        Group group=groupService.queryGroupById(student.getGroupId());
-        student.setRank(getNewRank(group)+1);
         studentDao.updateStudent(student);
     }
 
     @Override
-    public int getNewRank(Group group){
+    public int getCompletedCount(Group group){
         List<Student> students=studentDao.getStudentList(group);
-        int rank=1;
+        int count=0;
         for(Student student : students){
-            if(student.getRank()>rank) rank=student.getRank();
+            if(student.isCompleteState()) count++;
         }
-        return rank;
+        return count;
     }
 
 

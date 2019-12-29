@@ -20,4 +20,5 @@ public interface AdminService {
     Admin getAdminFromSession(HttpSession session);
     void updateAdmin(Admin admin);
     void changeAdminPassword(Admin admin);
+    void addStudent(Student student,Admin admin);
 }

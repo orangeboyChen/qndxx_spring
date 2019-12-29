@@ -1,5 +1,6 @@
 package com.orangeboy.interceptor;
 
+import org.apache.taglibs.standard.lang.jstl.test.PageContextImpl;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -10,9 +11,10 @@ import javax.servlet.http.HttpSession;
 public class AdminInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
+        PageContextImpl context=new PageContextImpl();
         HttpSession session=httpServletRequest.getSession();
         if(session.getAttribute("admin")==null){
-            httpServletResponse.sendRedirect("");
+            httpServletResponse.sendRedirect(httpServletRequest.getContextPath());
             return false;
         }
         return true;

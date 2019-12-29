@@ -35,6 +35,7 @@ public class AdminServiceImpl implements AdminService {
         for(Student student : list){
             student.setRequireState(true);
             student.setCompleteState(false);
+            student.setRank(0);
             studentDao.updateStudent(student);
         }
     }
@@ -53,6 +54,7 @@ public class AdminServiceImpl implements AdminService {
         List<Student> list=studentDao.getStudentList(admin.getGroup());
         for(Student student : list){
             student.setCompleteState(false);
+            student.setRank(0);
             studentDao.updateStudent(student);
         }
     }
@@ -111,6 +113,12 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void changeAdminPassword(Admin admin) {
         adminDao.changeAdminPassword(admin);
+    }
+
+    @Override
+    public void addStudent(Student student, Admin admin) {
+        student.setGroupId(admin.getGroupId());
+        studentDao.addStudent(student);
     }
 
 }

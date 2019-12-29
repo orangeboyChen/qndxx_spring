@@ -4,8 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.orangeboy.dao.StudentDao">
     <insert id="addStudent" parameterType="Student">
-        insert into Students(id, name, completeState, requireState)
-        values (#{id}, #{name}, #{completeState}, #{requireState},#{groupId})
+        insert into Students(id, name, completeState, requireState, groupId,rank,completeCount)
+        values (#{id}, #{name}, 0 , 1, #{groupId},0,0)
     </insert>
 
     <delete id="removeStudent" parameterType="Student">
@@ -20,7 +20,7 @@
 
     <update id="updateStudent" parameterType="Student">
         update Students
-        set completeState=#{completeState},requireState=#{requireState},lastCompleteTime=#{lastCompleteTime}
+        set completeState=#{completeState},requireState=#{requireState},lastCompleteTime=#{lastCompleteTime},rank=#{rank}
         where id=#{id} and groupId=#{groupId}
     </update>
 

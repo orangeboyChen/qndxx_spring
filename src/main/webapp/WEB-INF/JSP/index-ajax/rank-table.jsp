@@ -28,7 +28,7 @@
                     <c:choose>
                         <c:when test="${goodStudents[1]!=null}">
                             <td>${goodStudents[1].getName()}<span class="badge badge-success" style="margin-left: 0.5rem">第二名</span></td>
-                            <td>${goodStudents[1].getLastCompleteTime()}</td>
+                            <td>${goodStudents[1].getTimeStr()}</td>
                         </c:when>
                         <c:otherwise>
                             <td>NULL</td>
@@ -41,7 +41,7 @@
                     <c:choose>
                         <c:when test="${goodStudents[2]!=null}">
                             <td>${goodStudents[2].getName()}<span class="badge badge-success" style="margin-left: 0.5rem">第三名</span></td>
-                            <td>${goodStudents[2].getLastCompleteTime()}</td>
+                            <td>${goodStudents[2].getTimeStr()}</td>
                         </c:when>
                         <c:otherwise>
                             <td>NULL</td>

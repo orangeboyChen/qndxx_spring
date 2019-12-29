@@ -28,12 +28,7 @@ public class AdminController {
 
     @RequestMapping("")
     public String admin(HttpSession session, Model model, HttpServletResponse response) throws IOException {
-        System.out.println(session.getId());
         Admin admin=(Admin)session.getAttribute("admin");
-        if(admin==null){
-            response.sendError(404);
-            return null;
-        }
         admin.setNewLoginTime();
         adminService.updateAdmin(admin);
         model.addAttribute("lastTime",session.getAttribute("adminLastTime"));
@@ -115,27 +110,39 @@ public class AdminController {
 
     @RequestMapping("/changePassword")
     @ResponseBody
-    public String changePassword(String password,HttpSession session){
+    public String changePassword(String oldPassword,String newPassword,HttpSession session){
         Admin admin=adminService.getAdminFromSession(session);
-        if(admin!=null){
-            admin.setPassword(password);
-            adminService.changeAdminPassword(admin);
-            return "true";
-        }
-        else{
-            return "false";
-        }
+        if(!admin.getPassword().equals(oldPassword)) return "false";
+        admin.setPassword(newPassword);
+        adminService.changeAdminPassword(admin);
+        return "true";
     }
 
     @RequestMapping("/changeInfo")
     @ResponseBody
     public String chagneInfo(String groupName,String groupSec,HttpSession session){
         Admin admin=adminService.getAdminFromSession(session);
-        if(admin!=null){
-            Group group=admin.getGroup();
-            //group.setGroupName(groupName);
-            group.setGroupSec(groupSec);
-            groupService.updateGroup(group);
+         Group group=admin.getGroup();
+         //group.setGroupName(groupName);
+         group.setGroupSec(groupSec);
+         groupService.updateGroup(group);
+         return "true";
+
+    }
+
+    @RequestMapping("/initAllRequest")
+    @ResponseBody
+    public String initAllRequest(HttpSession session){
+        Admin admin=adminService.getAdminFromSession(session);
+        adminService.initStudentAllRequireState(admin);
+        return "true";
+    }
+
+    @RequestMapping("/checkPassword")
+    @ResponseBody
+    public String checkPassword(String password,HttpSession session){
+        Admin admin=adminService.getAdminFromSession(session);
+        if(admin.getPassword().equals(password)){
             return "true";
         }
         else{
@@ -143,15 +150,30 @@ public class AdminController {
         }
     }
 
-    @RequestMapping("/initAllRequest")
+    @RequestMapping("/addStudent")
     @ResponseBody
-    public String initAllRequest(HttpSession session){
+    public String addStudent(Student student,HttpSession session){
+        System.out.println("id"+student.getId());
         Admin admin=adminService.getAdminFromSession(session);
-        if(admin!=null){
-            adminService.initStudentAllRequireState(admin);
+        Student sameStudent=studentService.getStudentById(student.getId(),admin.getGroup());
+        if(sameStudent==null){
+            adminService.addStudent(student,admin);
             return "true";
         }
         else{
+            return "false";
+        }
+    }
+
+    @RequestMapping("/sameIdCheck")
+    @ResponseBody
+    public String sameIdCheck(String id,HttpSession session){
+        Admin admin=adminService.getAdminFromSession(session);
+        Student sameStudent=studentService.getStudentById(id,admin.getGroup());
+        if(sameStudent==null){
+            return "true";
+        }
+        else {
             return "false";
         }
     }

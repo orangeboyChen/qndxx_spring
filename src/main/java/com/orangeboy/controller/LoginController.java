@@ -67,7 +67,7 @@ public class LoginController {
                 return "fail";
             }
             else {
-                studentService.setStudentCompleteState(student, true);
+                studentService.setStudentCompleted(student);
                 session.setAttribute("student", student);
                 model.addAttribute("rank", studentService.getStudentRank(student));
                 return "success";

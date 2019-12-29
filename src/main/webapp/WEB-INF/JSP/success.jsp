@@ -29,7 +29,7 @@
         <h4>提交成功</h4>
         <p>你是第<span class="badge badge-primary" style="margin-left: 0.3rem;margin-right: 0.3rem">${rank}</span>位提交的</p>
         <div class=" col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-sm-8 offset-sm-2">
-            <input type="button" class="btn btn-primary col" value="返回" onclick="window.location.href='${pageContext.request.contextPath}'"/>
+            <input type="button" class="btn btn-primary col" value="返回" onclick="window.location.href='${pageContext.request.contextPath}/'"/>
         </div>
     </div>
 </div>
