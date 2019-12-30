@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.orangeboy.dao.StudentsDao">
+    <insert id="addStudent" parameterType="Student">
+        insert into Students(id, name, completeState, requireState, groupId,rank,completeCount)
+        values (#{id}, #{name}, 0 , 1, #{groupId},0,0)
+    </insert>
+
+    <delete id="removeStudent" parameterType="Student">
+        delete from Students
+        where id=#{id} and groupId=#{groupId}
+    </delete>
+    
+    <delete id="removeStudentById">
+        delete from Students
+        where id=#{id} and groupId=#{groupId} and groupId=#{group.groupId}
+    </delete>
+
+    <update id="updateStudent" parameterType="Student">
+        update Students
+        set completeState=#{completeState},requireState=#{requireState},lastCompleteTime=#{lastCompleteTime},rank=#{rank}
+        where id=#{id} and groupId=#{groupId}
+    </update>
+
+    <select id="queryStudent" parameterType="Student" resultType="Student">
+        select * from Students
+        where id=#{id} and name=#{name} and groupId=#{groupId}
+    </select>
+
+    <select id="queryStudentById" resultType="Student">
+        select * from Students
+        where id=#{id} and groupId=#{group.groupId}
+    </select>
+
+    <select id="queryStudentByName" resultType="Student">
+        select * from Students
+        where name=#{name} and groupId=#{group.groupId}
+    </select>
+
+    <select id="getAllStudentList" resultType="Student">
+        select * from Students and groupId=#{group.groupId}
+    </select>
+
+    <select id="getStudentList" parameterType="Group" resultType="Student">
+        select * from Students where groupId=#{groupId}
+    </select>
+</mapper>

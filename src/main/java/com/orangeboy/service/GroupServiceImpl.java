@@ -1,39 +1,38 @@
 package com.orangeboy.service;
 
-import com.orangeboy.dao.GroupDao;
+import com.orangeboy.dao.GroupsDao;
 import com.orangeboy.pojo.Group;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class GroupServiceImpl implements GroupService {
-    private GroupDao groupDao;
-    public void setGroupDao(GroupDao groupDao) {
-        this.groupDao = groupDao;
+    private GroupsDao groupsDao;
+    public void setGroupsDao(GroupsDao groupsDao) {
+        this.groupsDao = groupsDao;
     }
 
     @Override
     public void updateGroup(Group group) {
-        groupDao.updateGroup(group);
+        groupsDao.updateGroup(group);
     }
 
     @Override
     public void addGroup(Group group) {
-        groupDao.addGroup(group);
+        groupsDao.addGroup(group);
     }
 
     @Override
     public Group queryGroupById(int id) {
-        return groupDao.queryGroupById(id);
+        return groupsDao.queryGroupById(id);
     }
 
     @Override
     public Group queryGroupByName(String groupName) {
-        return groupDao.queryGroupByName(groupName);
+        return groupsDao.queryGroupByName(groupName);
     }
 
     @Override
     public Group queryGroupBySec(String groupSec) {
-        return groupDao.queryGroupBySec(groupSec);
+        return groupsDao.queryGroupBySec(groupSec);
     }
 }

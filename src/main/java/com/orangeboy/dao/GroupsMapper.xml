@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.orangeboy.dao.GroupsDao">
+    <select id="queryGroupById" resultType="Group">
+        select * from Groups
+        where groupId=#{id}
+    </select>
+
+    <select id="queryGroupByName" resultType="Group">
+        select * from Groups
+        where groupName=#{groupName}
+    </select>
+
+    <select id="queryGroupBySec" resultType="Group">
+        select * from Groups
+        where groupSec=#{groupSec}
+    </select>
+
+    <insert id="addGroup" parameterType="Group">
+        insert into Groups(groupSec, groupName, school, adminId, saying)
+        values (#{groupSec}, #{groupName}, #{school}, #{adminId}, #{saying})
+    </insert>
+
+    <delete id="removeGroup" parameterType="Group">
+        delete from Groups
+        where groupId=#{groupId}
+    </delete>
+
+    <update id="updateGroup" parameterType="Group">
+        update Groups
+        set groupSec=#{groupSec}, groupName=#{groupName}, school=#{school}, saying=#{saying},adminId=#{adminId},startTime=#{startTime}
+        where groupId=#{groupId}
+    </update>
+
+</mapper>

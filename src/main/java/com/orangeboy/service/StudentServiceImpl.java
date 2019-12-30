@@ -1,6 +1,6 @@
 package com.orangeboy.service;
 
-import com.orangeboy.dao.StudentDao;
+import com.orangeboy.dao.StudentsDao;
 import com.orangeboy.pojo.Group;
 import com.orangeboy.pojo.Student;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,17 +12,17 @@ import java.util.List;
 @Service
 public class StudentServiceImpl implements StudentService {
 
-    private StudentDao studentDao;
+    private StudentsDao studentsDao;
     @Autowired
     private GroupService groupService;
-    public void setStudentDao(StudentDao studentDao) {
-        this.studentDao = studentDao;
+    public void setStudentsDao(StudentsDao studentsDao) {
+        this.studentsDao = studentsDao;
     }
     @Override
     public void setStudentCompleteState(Student student, boolean state) {
         student.setCompleteState(state);
         student.setLastCompleteTime(System.currentTimeMillis());
-        studentDao.updateStudent(student);
+        studentsDao.updateStudent(student);
     }
 
     @Override
@@ -31,12 +31,12 @@ public class StudentServiceImpl implements StudentService {
         student.setRank(getCompletedCount(group)+1);
         setStudentCompleteState(student,true);
         student.setLastCompleteTime(System.currentTimeMillis());
-        studentDao.updateStudent(student);
+        studentsDao.updateStudent(student);
     }
 
     @Override
     public int getCompletedCount(Group group){
-        List<Student> students=studentDao.getStudentList(group);
+        List<Student> students= studentsDao.getStudentList(group);
         int count=0;
         for(Student student : students){
             if(student.isCompleteState()) count++;
@@ -48,19 +48,19 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student getStudentById(String id,Group group) {
-        return studentDao.queryStudentById(id,group);
+        return studentsDao.queryStudentById(id,group);
     }
 
     @Override
     public Student getValidStudent(Student student,Group group) {
-        return studentDao.queryStudent(student);
+        return studentsDao.queryStudent(student);
     }
 
 
 
     @Override
     public List<Student> getCompletedStudents(Group group) {
-        List<Student> students=studentDao.getStudentList(group);
+        List<Student> students= studentsDao.getStudentList(group);
         List<Student> completedStudents=new ArrayList<Student>();
         for (Student student : students) {
             if (student.isCompleteState()) {
@@ -72,7 +72,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<Student> getNotCompletedRequiredStudents(Group group) {
-        List<Student> students=studentDao.getStudentList(group);
+        List<Student> students= studentsDao.getStudentList(group);
         List<Student> qStudents=new ArrayList<Student>();
         for (Student student : students) {
             if ((!student.isCompleteState())&&student.isRequireState()) {
@@ -84,12 +84,12 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student getStudentByName(String name, Group group) {
-        return studentDao.queryStudentByName(name,group);
+        return studentsDao.queryStudentByName(name,group);
     }
 
     @Override
     public void removeStudent(Student student) {
-        studentDao.removeStudent(student);
+        studentsDao.removeStudent(student);
     }
 
     @Override

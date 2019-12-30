@@ -1,9 +1,8 @@
 package com.orangeboy.service;
 
-import com.orangeboy.dao.AdminDao;
-import com.orangeboy.dao.StudentDao;
+import com.orangeboy.dao.AdminsDao;
+import com.orangeboy.dao.StudentsDao;
 import com.orangeboy.pojo.Admin;
-import com.orangeboy.pojo.Group;
 import com.orangeboy.pojo.Student;
 import org.springframework.stereotype.Service;
 
@@ -13,55 +12,55 @@ import java.util.List;
 
 @Service
 public class AdminServiceImpl implements AdminService {
-    private StudentDao studentDao;
-    private AdminDao adminDao;
+    private StudentsDao studentsDao;
+    private AdminsDao adminsDao;
 
-    public void setAdminDao(AdminDao adminDao) {
-        this.adminDao = adminDao;
+    public void setAdminsDao(AdminsDao adminsDao) {
+        this.adminsDao = adminsDao;
     }
-    public void setStudentDao(StudentDao studentDao) {
-        this.studentDao = studentDao;
+    public void setStudentsDao(StudentsDao studentsDao) {
+        this.studentsDao = studentsDao;
     }
 
     @Override
     public void setStudentRequireState(Student student, boolean state) {
         student.setRequireState(state);
-        studentDao.updateStudent(student);
+        studentsDao.updateStudent(student);
     }
 
     @Override
     public void initStudentAll(Admin admin) {
-        List<Student> list=studentDao.getStudentList(admin.getGroup());
+        List<Student> list= studentsDao.getStudentList(admin.getGroup());
         for(Student student : list){
             student.setRequireState(true);
             student.setCompleteState(false);
             student.setRank(0);
-            studentDao.updateStudent(student);
+            studentsDao.updateStudent(student);
         }
     }
 
     @Override
     public void initStudentAllRequireState(Admin admin) {
-        List<Student> list=studentDao.getStudentList(admin.getGroup());
+        List<Student> list= studentsDao.getStudentList(admin.getGroup());
         for(Student student : list){
             student.setRequireState(true);
-            studentDao.updateStudent(student);
+            studentsDao.updateStudent(student);
         }
     }
 
     @Override
     public void initStudentAllCompleteState(Admin admin) {
-        List<Student> list=studentDao.getStudentList(admin.getGroup());
+        List<Student> list= studentsDao.getStudentList(admin.getGroup());
         for(Student student : list){
             student.setCompleteState(false);
             student.setRank(0);
-            studentDao.updateStudent(student);
+            studentsDao.updateStudent(student);
         }
     }
 
     @Override
     public List<Student> getRequiredStudents(Admin admin) {
-        List<Student> students=studentDao.getStudentList(admin.getGroup());
+        List<Student> students= studentsDao.getStudentList(admin.getGroup());
         List<Student> requiredStudents=new ArrayList<Student>();
         for (Student student : students) {
             if (student.isRequireState()) {
@@ -73,17 +72,17 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Admin getValidAdmin(Admin admin) {
-        return adminDao.queryAdmin(admin);
+        return adminsDao.queryAdmin(admin);
     }
 
     @Override
     public List<Student> getAllStudents(Admin admin) {
-        return studentDao.getStudentList(admin.getGroup());
+        return studentsDao.getStudentList(admin.getGroup());
     }
 
     @Override
     public List<Student> getCompletedStudents(Admin admin) {
-        List<Student> students=studentDao.getStudentList(admin.getGroup());
+        List<Student> students= studentsDao.getStudentList(admin.getGroup());
         List<Student> completedStudents=new ArrayList<Student>();
         for (Student student : students) {
             if (student.isCompleteState()) {
@@ -107,18 +106,18 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void updateAdmin(Admin admin) {
-        adminDao.updateAdmin(admin);
+        adminsDao.updateAdmin(admin);
     }
 
     @Override
     public void changeAdminPassword(Admin admin) {
-        adminDao.changeAdminPassword(admin);
+        adminsDao.changeAdminPassword(admin);
     }
 
     @Override
     public void addStudent(Student student, Admin admin) {
         student.setGroupId(admin.getGroupId());
-        studentDao.addStudent(student);
+        studentsDao.addStudent(student);
     }
 
 }
