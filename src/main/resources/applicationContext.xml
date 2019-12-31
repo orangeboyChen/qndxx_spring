@@ -5,4 +5,5 @@
     <import resource="classpath:spring/spring-mvc.xml"/>
     <import resource="classpath:spring/spring-dao.xml"/>
     <import resource="classpath:spring/spring-service.xml"/>
+    <import resource="classpath:spring/spring-email.xml"/>
 </beans>

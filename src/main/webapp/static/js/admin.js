@@ -6,6 +6,7 @@ var todoObj;
 $(document).ready(function(){
     rootUrl = $("#requestUrl").val()+"/admin";
     $("#alert").css("display","none");
+    $("body").hide().fadeIn(150);
     // $("#ck").on('click',function(){
     //     $("input[name='requiredYes']").attr("disabled",true);
     //     $("input[name='requiredYes']").removeClass("btn-primary");
@@ -196,6 +197,7 @@ function showSubmitInfo() {
     $("#groupSecInput").val($("#groupSec").text());
     $("#groupSecInput").attr("type","text");
     $("#groupSec").hide();
+
 }
 
 
@@ -308,7 +310,7 @@ function passwordSubmitted() {
 }
 
 function oldPasswordOnblur() {
-    if($("#oldPassword").val().length===0){
+    if(checkIfEmpty($("#oldPassword").val())){
         $("#oldPassword").removeClass();
         $("#oldPassword").addClass("form-control is-invalid");
         $("#oldPasswordFeedback").show();
@@ -431,7 +433,7 @@ var addStudent1=false;
 var addStudent2=false;
 function addStudentIdOnblur() {
     addStudent1=false;
-    if($("#addStudentId").val().length===0){
+    if(checkIfEmpty($("#addStudentId").val())){
         $("#addStudentIdFeedback").show();
         $("#addStudentIdFeedback").removeClass();
         $("#addStudentIdFeedback").addClass("invalid-feedback");
@@ -475,7 +477,7 @@ function addStudentIdOnblur() {
 
 function addStudentNameOnblur() {
     addStudent2=false;
-    if($("#addStudentName").val().length===0){
+    if(checkIfEmpty(($("#addStudentName").val()))){
         $("#addStudentName").removeClass();
         $("#addStudentName").addClass("form-control is-invalid");
         $("#addStudentNameFeedback").show();
@@ -547,6 +549,16 @@ function addSubmit() {
             }
         });
     }
+}
+
+function checkIfEmpty(obj) {
+    return typeof obj == "undefined" || obj == null || obj.trim() === "";
+}
+
+function toAddMutiple() {
+    $("html").fadeOut(150,function () {
+        window.location.href=rootUrl+"/addStudents";
+    });
 
 }
 

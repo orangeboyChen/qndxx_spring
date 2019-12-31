@@ -47,6 +47,12 @@ public class Student {
 
     public Student(){}
 
+    public Student(String id, String name, Group group){
+        this.id=id;
+        this.name=name;
+        this.groupId=group.getGroupId();
+    }
+
     public Student(String name,int lastCompleteTime){
         this.name=name;
         this.lastCompleteTime=lastCompleteTime;

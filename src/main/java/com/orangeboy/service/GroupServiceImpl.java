@@ -2,10 +2,12 @@ package com.orangeboy.service;
 
 import com.orangeboy.dao.GroupsDao;
 import com.orangeboy.pojo.Group;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class GroupServiceImpl implements GroupService {
+    @Autowired
     private GroupsDao groupsDao;
     public void setGroupsDao(GroupsDao groupsDao) {
         this.groupsDao = groupsDao;

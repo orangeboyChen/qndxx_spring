@@ -3,15 +3,12 @@ package com.orangeboy.controller;
 import com.orangeboy.pojo.Admin;
 import com.orangeboy.pojo.Group;
 import com.orangeboy.pojo.Student;
-import com.orangeboy.service.AdminService;
-import com.orangeboy.service.StudentService;
+import com.orangeboy.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -20,8 +17,17 @@ public class LoginController {
     private StudentService studentService;
     @Autowired
     private AdminService adminService;
+    @Autowired
+    private SchoolService schoolService;
+    @Autowired
+    private EmailService emailService;
+    @Autowired
+    private GroupService groupService;
+
+
     @RequestMapping("/")
     public String index(Model model){
+        emailService.sendEmail("chenenhan@qq.com","hahahahaha","this is a test mail hahahahahaha!");
 //        List<Student> badStudents=studentService.getNotCompletedRequiredStudents();
 //        List<Student> goodStudents=studentService.getCompletedStudents();
 //        Student[] topGoodStudents=new Student[3];
@@ -38,14 +44,38 @@ public class LoginController {
     }
 
     @RequestMapping("/Login")
-    public String login(Student student, HttpSession session,Model model){
-        Group group=(Group)session.getAttribute("group");
-        if(group==null)return "fail";
+    public String login(Student student, String groupSec, HttpSession session,Model model){
+        Group group=null;
+        try {
+            group = (Group) session.getAttribute("group");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        System.out.println("1111111111111111111111");
+        System.out.println(group==null);
+        if(group==null){
+            if(!"".equals(groupSec.trim())){
+                group=groupService.queryGroupBySec(groupSec);
+                System.out.println(group==null);
+
+                if(group!=null) {
+                    session.setAttribute("group", group);
+                    System.out.println(group.getGroupId());
+                    group.setTimeStr();
+                }
+                else {
+                    model.addAttribute("info","没有找到班级");
+                    return "fail";
+                }
+
+            }
+        }
         if("admin".equals(student.getId())){
             Admin admin=new Admin(student.getGroupId(),student.getId(),student.getName());
             Admin validAdmin=adminService.getValidAdmin(admin);
             if(validAdmin!=null){
                 validAdmin.setGroup(group);
+                group.setSchoolObject(schoolService.querySchoolByGroup(group));
                 session.setAttribute("adminLastTime",validAdmin.getTimeStr());
                 session.setAttribute("admin",validAdmin);
                 System.out.println(session.getId());
@@ -56,7 +86,13 @@ public class LoginController {
                 return "fail";
             }
         }
-        Student validStudent = studentService.getValidStudent(student,group);
+        System.out.println(student==null);
+        System.out.println(student.getId());
+        System.out.println(student.getName());
+
+        student.setGroupId(group.getGroupId());
+        Student validStudent = studentService.queryValidStudent(student,group);
+        System.out.println(validStudent==null);
         if(validStudent!=null){
             if(validStudent.isCompleteState()){
                 model.addAttribute("info","你已经提交过了");

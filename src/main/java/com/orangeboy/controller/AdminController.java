@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -70,7 +72,7 @@ public class AdminController {
     @ResponseBody
     public String deleteStudent(String id,HttpSession session){
         Admin admin=adminService.getAdminFromSession(session);
-        Student student=studentService.getStudentById(id,admin.getGroup());
+        Student student=studentService.queryStudentById(id,admin.getGroup());
         if(student!=null){
             studentService.removeStudent(student);
             return "true";
@@ -84,7 +86,7 @@ public class AdminController {
     @ResponseBody
     public String changeRequireStateToYes(String id,HttpSession session){
         Admin admin=adminService.getAdminFromSession(session);
-        Student student=studentService.getStudentById(id,admin.getGroup());
+        Student student=studentService.queryStudentById(id,admin.getGroup());
         if(student!=null){
             adminService.setStudentRequireState(student,true);
             return "true";
@@ -98,7 +100,7 @@ public class AdminController {
     @ResponseBody
     public String changeRequireStateToNo(String id,HttpSession session){
         Admin admin=adminService.getAdminFromSession(session);
-        Student student=studentService.getStudentById(id,admin.getGroup());
+        Student student=studentService.queryStudentById(id,admin.getGroup());
         if(student!=null){
             adminService.setStudentRequireState(student,false);
             return "true";
@@ -155,7 +157,7 @@ public class AdminController {
     public String addStudent(Student student,HttpSession session){
         System.out.println("id"+student.getId());
         Admin admin=adminService.getAdminFromSession(session);
-        Student sameStudent=studentService.getStudentById(student.getId(),admin.getGroup());
+        Student sameStudent=studentService.queryStudentById(student.getId(),admin.getGroup());
         if(sameStudent==null){
             adminService.addStudent(student,admin);
             return "true";
@@ -169,7 +171,7 @@ public class AdminController {
     @ResponseBody
     public String sameIdCheck(String id,HttpSession session){
         Admin admin=adminService.getAdminFromSession(session);
-        Student sameStudent=studentService.getStudentById(id,admin.getGroup());
+        Student sameStudent=studentService.queryStudentById(id,admin.getGroup());
         if(sameStudent==null){
             return "true";
         }
@@ -178,4 +180,55 @@ public class AdminController {
         }
     }
 
+
+    class addMutipleData{
+        List<Student> sameIdStudents;
+        List<Student> completedStudents;
+        addMutipleData(List<Student> sameIdStudents, List<Student> completedStudents){
+            this.sameIdStudents=sameIdStudents;
+            this.completedStudents=completedStudents;
+        }
+
+        public List<Student> getSameIdStudents() {
+            return sameIdStudents;
+        }
+
+        public void setSameIdStudents(List<Student> sameIdStudents) {
+            this.sameIdStudents = sameIdStudents;
+        }
+
+        public List<Student> getCompletedStudents() {
+            return completedStudents;
+        }
+
+        public void setCompletedStudents(List<Student> completedStudents) {
+            this.completedStudents = completedStudents;
+        }
+    }
+
+    @RequestMapping("/addMutiple")
+    @ResponseBody
+    public addMutipleData addMutiple(String[] ids, String[] names, HttpSession session){
+
+        Admin admin=adminService.getAdminFromSession(session);
+        List<Student> sameIdStudents=new ArrayList<Student>();
+        List<Student> completedStudents=new ArrayList<Student>();
+        for(int i=0;i<ids.length;i++){
+            Student sameStudent=studentService.queryStudentById(ids[i],admin.getGroup());
+            if(sameStudent!=null){
+                sameIdStudents.add(new Student(ids[i],names[i],admin.getGroup()));
+                continue;
+            }
+            Student student=new Student(ids[i],names[i],admin.getGroup());
+            studentService.addStudent(student);
+            completedStudents.add(student);
+        }
+
+        return new addMutipleData(sameIdStudents,completedStudents);
+    }
+
+    @RequestMapping("/addStudents")
+    public String getAddStudents(){
+        return "addMutiple";
+    }
 }

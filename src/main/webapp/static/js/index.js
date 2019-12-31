@@ -19,7 +19,7 @@ function getGroupBySec(obj) {
                 $("#groupSec").addClass("form-control is-valid");
                 $("#groupSecFeedback").removeClass();
                 $("#groupSecFeedback").addClass("valid-feedback");
-                $("#groupSecFeedback").html("已找到班级："+data.school+"-"+data.groupName);
+                $("#groupSecFeedback").html("已找到班级："+data.school+data.institution+"-"+data.groupName);
                 $("#groupId").val(data.groupId);
                 $("#saying").css("display","block");
                 $("blockquote").html(data.saying);

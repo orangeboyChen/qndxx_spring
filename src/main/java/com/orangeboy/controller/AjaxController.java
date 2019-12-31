@@ -6,6 +6,7 @@ import com.orangeboy.pojo.Group;
 import com.orangeboy.pojo.Student;
 import com.orangeboy.service.AdminService;
 import com.orangeboy.service.GroupService;
+import com.orangeboy.service.SchoolService;
 import com.orangeboy.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,19 +24,22 @@ public class AjaxController {
     private StudentService studentService;
     @Autowired
     private AdminService adminService;
+    @Autowired
+    private SchoolService schoolService;
     @RequestMapping("/ajax/checkGroupSec")
     @ResponseBody
     public Group checkGroupSec(String groupSec, HttpSession session){
         Group group=groupService.queryGroupBySec(groupSec);
+        group.setSchoolObject(schoolService.querySchoolByGroup(group));
         if(group!=null){
             session.setAttribute("group",group);
             group.setTimeStr();
-            group.setAdminId(-1);
         }
         else{
             session.setAttribute("group",null);
         }
-        return group;
+        Group groupCloned=(Group) group.clone();
+        groupCloned.setAdminId(-1);
+        return groupCloned;
     }
-
 }

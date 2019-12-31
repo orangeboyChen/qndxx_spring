@@ -12,6 +12,7 @@ import java.util.List;
 @Service
 public class StudentServiceImpl implements StudentService {
 
+    @Autowired
     private StudentsDao studentsDao;
     @Autowired
     private GroupService groupService;
@@ -47,12 +48,12 @@ public class StudentServiceImpl implements StudentService {
 
 
     @Override
-    public Student getStudentById(String id,Group group) {
+    public Student queryStudentById(String id, Group group) {
         return studentsDao.queryStudentById(id,group);
     }
 
     @Override
-    public Student getValidStudent(Student student,Group group) {
+    public Student queryValidStudent(Student student, Group group) {
         return studentsDao.queryStudent(student);
     }
 
@@ -83,13 +84,18 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student getStudentByName(String name, Group group) {
+    public Student queryStudentByName(String name, Group group) {
         return studentsDao.queryStudentByName(name,group);
     }
 
     @Override
     public void removeStudent(Student student) {
         studentsDao.removeStudent(student);
+    }
+
+    @Override
+    public void addStudent(Student student) {
+        studentsDao.addStudent(student);
     }
 
     @Override

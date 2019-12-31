@@ -4,6 +4,7 @@ import com.orangeboy.dao.AdminsDao;
 import com.orangeboy.dao.StudentsDao;
 import com.orangeboy.pojo.Admin;
 import com.orangeboy.pojo.Student;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
@@ -12,7 +13,9 @@ import java.util.List;
 
 @Service
 public class AdminServiceImpl implements AdminService {
+    @Autowired
     private StudentsDao studentsDao;
+    @Autowired
     private AdminsDao adminsDao;
 
     public void setAdminsDao(AdminsDao adminsDao) {

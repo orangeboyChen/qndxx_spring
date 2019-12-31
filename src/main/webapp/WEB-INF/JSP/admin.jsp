@@ -50,13 +50,13 @@
         <div class="col-md-6">
             <br>
             <h5>当前个人及管理信息</h5>
-            <div class="doneList">
+            <div id="doneList">
                 <input type="button" class="btn btn-primary" value="更改信息" id="changeInfo" onclick="showSubmitInfo()"/>
                 <input type="hidden" class="btn btn-primary" value="提交" id="submitInfo" onclick="changeInfo()"/>
                 <input type="button" class="btn btn-secondary" value="修改管理员密码" data-toggle="modal" data-target="#changePasswordModal"/>
                 <br><br>
                 <table class="table table-hover" border="0px" width="400px">
-                    <tr><td>学校</td><td>${group.getSchool()}</td></tr>
+                    <tr><td width="100rem">学校</td><td>${group.getSchool()}</td></tr>
                     <tr><td>班级</td><td>${group.getGroupName()}</td></tr>
                     <tr><td>班级代号</td>
                         <td>
@@ -90,13 +90,11 @@
         </div>
         <div class="col-md-6 offset-lg-0 offset-md-0">
             <h5>更改名单</h5>
+            <input class="btn btn-primary" type="button" value="添加单个成员" id="showAddStudent" data-toggle="collapse" data-target="#addStudent">
+            <input type="button" class="btn btn-primary" value="批量添加学生" onclick="toAddMutiple()">
 
-            <input class="btn btn-secondary" type="button" name="ck" id="ck" value="全部需要完成" onClick="allRequireYes()">
-            <input class="btn btn-primary" type="button" value="添加成员" id="showAddStudent" data-toggle="collapse" data-target="#addStudent">
-
-            <br>
             <div id="addStudent" class="collapse">
-                <br>
+                <div style="height: 1rem"></div>
                 <label for="addStudentId">学号</label>
                 <input class="form-control" type="text" id="addStudentId" onblur="addStudentIdOnblur()">
                 <div id="addStudentIdFeedback"></div>
@@ -106,10 +104,11 @@
                 <div id="addStudentNameFeedback"></div><br>
 
                 <input class="btn btn-primary" type="button" value="提交" id="addStudentSubmit" onclick="addSubmit()">
+                <div style="height: 1rem"></div>
             </div>
-
-
-            <br><br>
+            <div style="height: 0.5rem"></div>
+            <input class="btn btn-secondary" type="button" name="ck" id="ck" value="全部需要完成" onClick="allRequireYes()">
+            <div style="height: 0.5rem"></div>
             <table class="table table-hover" border="0px" width="400px" id="studentTable">
                 <tr id="tableHead"><th>姓名及学号</th><th>是否要求完成</th><th>指令</th></tr>
                 <c:forEach var="student" items="${studentsList}">
