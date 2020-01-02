@@ -564,7 +564,7 @@ function toAddMutiple() {
 
 function logOut() {
     $("html").fadeOut(150,function () {
-        window.location.href=homeUrl;
+        window.location.href=homeUrl+"/";
     })
 }
 

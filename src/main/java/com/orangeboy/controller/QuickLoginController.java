@@ -2,7 +2,9 @@ package com.orangeboy.controller;
 
 import com.orangeboy.dao.AdminsDao;
 import com.orangeboy.pojo.Admin;
+import com.orangeboy.pojo.Group;
 import com.orangeboy.service.AdminService;
+import com.orangeboy.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,8 @@ import javax.servlet.http.HttpSession;
 public class QuickLoginController {
     @Autowired
     private AdminService adminService;
+    @Autowired
+    private GroupService groupService;
     @RequestMapping("/quickLogin/{random}")
     public String quickLogin(@PathVariable(name = "random") String random, HttpSession session, Model model){
         Admin admin = adminService.queryAdminByRandom(random);
@@ -22,7 +26,15 @@ public class QuickLoginController {
             return "fail";
         }
         else{
+
+            admin.setRandom("");
+            adminService.updateAdmin(admin);
+
+
+            Group group = groupService.queryGroupById(admin.getGroupId());
+            admin.setGroup(group);
             session.setAttribute("admin",admin);
+            session.setAttribute("group",group);
             return "addMutiple";
         }
 

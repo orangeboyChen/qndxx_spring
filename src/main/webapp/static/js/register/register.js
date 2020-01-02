@@ -25,7 +25,7 @@ function registerForward() {
 function registerBackward() {
     pageBackwardFadeOut(function () {
         $(".container").css("position","");
-        window.location.href=homeUrl;
+        window.location.href=homeUrl+"/";
     });
 }
 
