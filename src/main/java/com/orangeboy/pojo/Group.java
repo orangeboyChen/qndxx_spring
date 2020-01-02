@@ -138,4 +138,6 @@ public class Group implements Cloneable{
     public void setTimeStr(String timeStr) {
         this.timeStr = timeStr;
     }
+
+
 }

@@ -57,6 +57,7 @@
                 <br><br>
                 <table class="table table-hover" border="0px" width="400px">
                     <tr><td width="100rem">学校</td><td>${group.getSchool()}</td></tr>
+                    <tr><td>学院</td><td>${group.getInstitution()}</td></tr>
                     <tr><td>班级</td><td>${group.getGroupName()}</td></tr>
                     <tr><td>班级代号</td>
                         <td>
