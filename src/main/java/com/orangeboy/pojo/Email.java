@@ -12,6 +12,7 @@ public class Email {
         requestTime = System.currentTimeMillis();
     }
 
+
     public Email(String email, String code){
         this.email = email;
         this.code = code;
