@@ -73,6 +73,7 @@ public class SuperAdminController {
         adminService.insertAdmin(admin);
         admin = adminService.queryAdminByEmail(register.getEmail());
         group.setAdminId(admin.getId());
+        group.setSchoolId(mSchool.getSchoolId());
         groupService.updateGroup(group);
 
         mUtil.agreeSuccess(register.getEmail(),code,register,emailService);

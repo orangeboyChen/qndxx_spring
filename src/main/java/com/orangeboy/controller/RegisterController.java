@@ -78,15 +78,15 @@ public class RegisterController {
     public String getRegist2Page(String school, String institution, HttpSession session,Model model){
         Register register = registerService.getRegisterFromSession(session);
         School registerSchool = null;
-        try {
-            registerSchool = (School) session.getAttribute(SCHOOL);
-        }catch (Exception e){}
+//        try {
+//            registerSchool = (School) session.getAttribute(SCHOOL);
+//        }catch (Exception e){}
 
-        if(registerSchool == null){
+//        if(registerSchool == null){
             registerSchool = schoolService.querySchoolByData(school,institution);
             if(registerSchool==null){
                 registerSchool = new School(school,institution);
-            }
+//            }
         }
         register.setSchool(registerSchool);
         session.setAttribute(SCHOOL,registerSchool);
