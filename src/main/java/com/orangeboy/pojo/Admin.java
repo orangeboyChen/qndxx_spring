@@ -12,6 +12,9 @@ public class Admin {
     private String password;
     private Group group;
     private long lastLoginTime;
+    private String realName;
+    private String email;
+    private String random;
 
     public long getLastLoginTime() {
         return lastLoginTime;
@@ -73,6 +76,15 @@ public class Admin {
         this.password=password;
     }
 
+    public Admin(String name, int groupId, String password, String realName, String email, String random){
+        this.name = name;
+        this.groupId = groupId;
+        this.password = password;
+        this.realName = realName;
+        this.email = email;
+        this.random = random;
+    }
+
     public int getGroupId() {
         return groupId;
     }
@@ -95,5 +107,29 @@ public class Admin {
 
     public void setSchool(String school) {
         this.school = school;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getRandom() {
+        return random;
+    }
+
+    public void setRandom(String random) {
+        this.random = random;
     }
 }

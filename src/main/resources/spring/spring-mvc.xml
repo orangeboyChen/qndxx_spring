@@ -39,4 +39,11 @@
             <bean class="com.orangeboy.interceptor.AdminInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/superAdmin/**"/>
+            <bean class="com.orangeboy.interceptor.SuperAdminInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 </beans>

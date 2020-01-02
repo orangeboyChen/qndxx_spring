@@ -5,6 +5,13 @@ public class School {
     private String school;
     private String institution;
 
+    public School(){}
+    public School(String school, String institution){
+        this.school = school;
+        this.institution = institution;
+        this.schoolId = -1;
+    }
+
     public int getSchoolId() {
         return schoolId;
     }
@@ -27,5 +34,9 @@ public class School {
 
     public void setInstitution(String institution) {
         this.institution = institution;
+    }
+
+    public boolean isOldSchool(){
+        return schoolId > 0;
     }
 }

@@ -4,10 +4,13 @@ import com.orangeboy.pojo.Admin;
 import com.orangeboy.pojo.Group;
 import com.orangeboy.pojo.Student;
 import com.orangeboy.service.*;
+import com.orangeboy.util.mUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.mail.Session;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -26,8 +29,7 @@ public class LoginController {
 
 
     @RequestMapping("/")
-    public String index(Model model){
-        emailService.sendEmail("chenenhan@qq.com","hahahahaha","this is a test mail hahahahahaha!");
+    public String index(HttpSession session, Model model){
 //        List<Student> badStudents=studentService.getNotCompletedRequiredStudents();
 //        List<Student> goodStudents=studentService.getCompletedStudents();
 //        Student[] topGoodStudents=new Student[3];
@@ -40,36 +42,52 @@ public class LoginController {
 //        model.addAttribute("badStudents",badStudents);
 //        model.addAttribute("goodStudentsCount",goodStudents.size());
 //        model.addAttribute("badStudentsCount",badStudents.size());
+        Student student = (Student) session.getAttribute("student");
+        if(student!=null){
+            model.addAttribute("groupSec",student.getGroupSec());
+        }
+
         return "index";
     }
 
     @RequestMapping("/Login")
     public String login(Student student, String groupSec, HttpSession session,Model model){
+        if(student==null) return "fail";
+        if("superadmin".equals(student.getId())&&"superadmin".equals(student.getName())){
+            session.setAttribute("superAdmin","true");
+            return "redirect:/superAdmin";
+        }
+
+
         Group group=null;
         try {
             group = (Group) session.getAttribute("group");
         }catch (Exception e){
             e.printStackTrace();
         }
-        System.out.println("1111111111111111111111");
-        System.out.println(group==null);
+
         if(group==null){
             if(!"".equals(groupSec.trim())){
                 group=groupService.queryGroupBySec(groupSec);
                 System.out.println(group==null);
-
                 if(group!=null) {
                     session.setAttribute("group", group);
                     System.out.println(group.getGroupId());
                     group.setTimeStr();
                 }
                 else {
+                    session.setAttribute("student", null);
                     model.addAttribute("info","没有找到班级");
                     return "fail";
                 }
-
+            }
+            else{
+                session.setAttribute("student", null);
+                model.addAttribute("info","别皮哦");
+                return "fail";
             }
         }
+
         if("admin".equals(student.getId())){
             Admin admin=new Admin(student.getGroupId(),student.getId(),student.getName());
             Admin validAdmin=adminService.getValidAdmin(admin);
@@ -82,35 +100,44 @@ public class LoginController {
                 return "redirect:/admin";
             }
             else{
+                session.setAttribute("student", null);
                 model.addAttribute("info","密码错误");
                 return "fail";
             }
         }
-        System.out.println(student==null);
-        System.out.println(student.getId());
-        System.out.println(student.getName());
 
         student.setGroupId(group.getGroupId());
         Student validStudent = studentService.queryValidStudent(student,group);
         System.out.println(validStudent==null);
         if(validStudent!=null){
             if(validStudent.isCompleteState()){
+                student.setGroupSec(groupSec);
+                session.setAttribute("student", student);
                 model.addAttribute("info","你已经提交过了");
                 return "fail";
             }
             else if(!validStudent.isRequireState()){
+                student.setGroupSec(groupSec);
+                session.setAttribute("student", student);
                 model.addAttribute("info","你有特权不用做哦");
                 return "fail";
             }
             else {
                 studentService.setStudentCompleted(student);
+                student.setGroupSec(groupSec);
                 session.setAttribute("student", student);
                 model.addAttribute("rank", studentService.getStudentRank(student));
                 return "success";
             }
         }
         else{
-            model.addAttribute("info","没有这个学生");
+            if("".equals(student.getId().trim())||"".equals(student.getId().trim())){
+                model.addAttribute("info","你在逗我呢");
+            }
+            else {
+                model.addAttribute("info", "没有这个学生");
+            }
+            session.setAttribute("student", null);
             return "fail";
         }
     }

@@ -22,7 +22,8 @@ public interface StudentsDao {
     void removeStudentById(@Param("id")String id,@Param("group")Group group);
 
     @Update("update Students " +
-            "set completeState=#{completeState},requireState=#{requireState},lastCompleteTime=#{lastCompleteTime},rank=#{rank}")
+            "set completeState=#{completeState},requireState=#{requireState},lastCompleteTime=#{lastCompleteTime},rank=#{rank} "+
+            "where id=#{id} and groupId=#{groupId} ")
     void updateStudent(Student student);
 
     @Select("select * from Students " +

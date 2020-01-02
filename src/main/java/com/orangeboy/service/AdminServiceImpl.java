@@ -123,4 +123,18 @@ public class AdminServiceImpl implements AdminService {
         studentsDao.addStudent(student);
     }
 
+    @Override
+    public Admin queryAdminByEmail(String email) {
+        return adminsDao.queryAdminByEmail(email);
+    }
+
+    @Override
+    public void insertAdmin(Admin admin) {
+        adminsDao.insertAdmin(admin);
+    }
+
+    @Override
+    public Admin queryAdminByRandom(String random) {
+        return adminsDao.queryAdminByRandom(random);
+    }
 }

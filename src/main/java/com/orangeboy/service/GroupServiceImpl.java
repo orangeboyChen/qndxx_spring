@@ -2,6 +2,7 @@ package com.orangeboy.service;
 
 import com.orangeboy.dao.GroupsDao;
 import com.orangeboy.pojo.Group;
+import com.orangeboy.pojo.School;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,4 +38,10 @@ public class GroupServiceImpl implements GroupService {
     public Group queryGroupBySec(String groupSec) {
         return groupsDao.queryGroupBySec(groupSec);
     }
+
+    @Override
+    public Group queryGroupBySchoolAndName(String groupName, School school) {
+        return groupsDao.queryGroupBySchoolAndName(groupName, school);
+    }
+
 }

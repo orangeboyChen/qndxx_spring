@@ -4,7 +4,7 @@
 <br>
 <br>
 <br>
-            <h4>光荣榜<input class="btn btn-sm btn-secondary" type="button" style="float: right" value="刷新"/></h4>
+            <h4>光荣榜<input class="btn btn-sm btn-secondary" type="button" style="float: right" value="刷新" onclick="refreshRank()"/></h4>
 
             <table class="table table-striped col">
                 <tr>
@@ -54,7 +54,7 @@
 
             <br>
 
-            <h4>${goodStudentsCount}人已交，${badStudentsCount}人未交<input class="btn btn-sm btn-secondary" type="button" style="float: right" value="刷新"/></h4>
+            <h4>${goodStudentsCount}人已交，${badStudentsCount}人未交<input class="btn btn-sm btn-secondary" type="button" style="float: right" value="刷新" onclick="refreshRank()"/></h4>
 
             <label>未交名单</label>
             <table class="table table-striped col">

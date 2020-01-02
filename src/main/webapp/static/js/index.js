@@ -1,6 +1,7 @@
+var rootUrl;
 function getGroupBySec(obj) {
     $.post({
-        url:$("#requestUrl").val() + "/ajax/checkGroupSec",
+        url:rootUrl + "/ajax/checkGroupSec",
         data:{'groupSec':$("#groupSec").val()},
         success:function (data) {
             if(data.toString() == ''){
@@ -10,8 +11,11 @@ function getGroupBySec(obj) {
                 $("#groupSecFeedback").addClass("invalid-feedback");
                 $("#groupSecFeedback").html("没有找到相应的班级");
                 $("#saying").css("display","none");
-                $("#rank").empty();
-                $("#rank").load($("#requestUrl").val() + "/indexRight");
+                $("#rank").fadeOut(150,function () {
+                    $("#rank").load($("#requestUrl").val() + "/indexRight","",function () {
+                        $("#rank").fadeIn(150);
+                    });
+                });
                 $("#groupStartTime").html("");
             }
             else{
@@ -23,9 +27,12 @@ function getGroupBySec(obj) {
                 $("#groupId").val(data.groupId);
                 $("#saying").css("display","block");
                 $("blockquote").html(data.saying);
-                $("#rank").load($("#requestUrl").val() + "/rankTable");
+                $("#rank").fadeOut(150,function () {
+                    $("#rank").load($("#requestUrl").val() + "/rankTable","",function () {
+                        $("#rank").fadeIn(150);
+                    });
+                });
                 $("#groupStartTime").html("新的大学习已于"+data.timeStr+"开始");
-
             }
         }
     });
@@ -49,7 +56,31 @@ function changeAdminLabel(){
 }
 
 $("document").ready(function () {
-        $("#rank").load($("#requestUrl").val() + "/indexRight");
+    $("body").hide();
+    $("#rank").load($("#requestUrl").val() + "/indexRight");
+    rootUrl=$("#requestUrl").val();
+    if($("#groupSec").val()!==""){
+        getGroupBySec();
     }
 
-)
+    $("body").fadeIn(100);
+    }
+);
+
+function toRegister() {
+    $(".container").css("position","relative");
+    $(".container").animate({
+       right:'1rem',
+       opacity:'0'
+    },100,function () {
+        window.location.href=rootUrl+"/register";
+    });
+}
+
+function refreshRank() {
+    $("#rank").fadeOut(150,function () {
+        $("#rank").load($("#requestUrl").val() + "/rankTable","",function () {
+            $("#rank").fadeIn(150);
+        });
+    });
+}

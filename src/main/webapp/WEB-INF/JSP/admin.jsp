@@ -11,7 +11,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Admin</title>
+    <title>欢迎团支书</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
@@ -34,7 +34,7 @@
     <div class="row">
         <div class="col-md-6">
             <div style="height: 1rem"></div>
-            <h1>管理端</h1>
+            <h1>团支书端<input type="button" class="btn btn-primary float-right" value="退出登录" onclick="logOut()"></h1>
             <h5>上次登录时间：${lastTime}</h5>
             <label>当前团支书寄语:</label>
             <input class="form-control" type="text" id="sayingTxt" value="${group.getSaying()}">

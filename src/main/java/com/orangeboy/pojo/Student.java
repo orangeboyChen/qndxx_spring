@@ -13,6 +13,8 @@ public class Student {
     private long lastCompleteTime;
     private int groupId;
 
+    private String groupSec;
+
 
 
     public String getTimeStr() {
@@ -106,4 +108,11 @@ public class Student {
         this.rank = rank;
     }
 
+    public String getGroupSec() {
+        return groupSec;
+    }
+
+    public void setGroupSec(String groupSec) {
+        this.groupSec = groupSec;
+    }
 }

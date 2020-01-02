@@ -21,4 +21,7 @@ public interface AdminService {
     void updateAdmin(Admin admin);
     void changeAdminPassword(Admin admin);
     void addStudent(Student student,Admin admin);
+    Admin queryAdminByEmail(String email);
+    void insertAdmin(Admin admin);
+    Admin queryAdminByRandom(String random);
 }

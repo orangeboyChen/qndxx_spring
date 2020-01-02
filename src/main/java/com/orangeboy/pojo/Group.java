@@ -15,6 +15,13 @@ public class Group implements Cloneable{
     private String institution;
     private School schoolObject;
 
+    public Group(){}
+
+    public Group(String groupName, String groupSec){
+        this.groupName = groupName;
+        this.groupSec = groupSec;
+    }
+
     public void setSchool(String school) {
         this.school = school;
     }

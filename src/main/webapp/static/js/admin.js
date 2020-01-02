@@ -1,9 +1,11 @@
 var rootUrl;
+var homeUrl;
 var systemFail="系统拒绝了你的请求";
 var netFail="网络连接失败";
 var todoObj;
 
 $(document).ready(function(){
+    homeUrl = $("#requestUrl").val();
     rootUrl = $("#requestUrl").val()+"/admin";
     $("#alert").css("display","none");
     $("body").hide().fadeIn(150);
@@ -204,7 +206,6 @@ function showSubmitInfo() {
 function startModal(obj) {
     todoObj=obj;
     var id=todoObj.id;
-    console.log(id);
     var todo=obj.name;
     switch (todo){
         case 'new':
@@ -559,7 +560,11 @@ function toAddMutiple() {
     $("html").fadeOut(150,function () {
         window.location.href=rootUrl+"/addStudents";
     });
-
 }
 
+function logOut() {
+    $("html").fadeOut(150,function () {
+        window.location.href=homeUrl;
+    })
+}
 

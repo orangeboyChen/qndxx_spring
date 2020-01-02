@@ -1,6 +1,7 @@
 package com.orangeboy.dao;
 
 import com.orangeboy.pojo.Group;
+import com.orangeboy.pojo.School;
 import org.apache.ibatis.annotations.*;
 
 @Mapper
@@ -12,6 +13,9 @@ public interface GroupsDao {
     @Select("select * from Groups " +
             "where groupName=#{groupName}")
     Group queryGroupByName(String groupName);
+
+    @Select("select * from Groups where groupName=#{groupName} and schoolId=#{school.schoolId}")
+    Group queryGroupBySchoolAndName(@Param("groupName")String groupName, @Param("school")School school);
 
     @Select("select * from Groups " +
             "where groupSec=#{groupSec}")

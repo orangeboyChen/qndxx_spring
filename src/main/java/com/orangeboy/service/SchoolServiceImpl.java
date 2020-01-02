@@ -15,4 +15,19 @@ public class SchoolServiceImpl implements SchoolService {
     public School querySchoolByGroup(Group group) {
         return schoolsDao.querySchoolByGroup(group);
     }
+
+    @Override
+    public School querySchoolByName(String name) {
+        return schoolsDao.querySchoolByName(name);
+    }
+
+    @Override
+    public School querySchoolByData(String school, String institution) {
+        return schoolsDao.querySchoolByData(school, institution);
+    }
+
+    @Override
+    public void insertSchool(String school, String institution) {
+        schoolsDao.insertSchool(school, institution);
+    }
 }

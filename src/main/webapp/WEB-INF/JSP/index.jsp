@@ -36,7 +36,7 @@
 
                 <input name="requestUrl" id="requestUrl" type="hidden" value="${pageContext.request.contextPath}"/>
                 <label for="groupSec">班级代号</label>
-                <input class="form-control" type="text" name="groupSec" id="groupSec" onblur="getGroupBySec(this)"/>
+                <input class="form-control" type="text" value="${groupSec}" name="groupSec" id="groupSec" onblur="getGroupBySec(this)"/>
                 <div id="groupSecFeedback"></div>
                 <input type="hidden" name="groupId" id="groupId" value="-1"/>
                 <label for="id" id="idLabel">学号</label>
