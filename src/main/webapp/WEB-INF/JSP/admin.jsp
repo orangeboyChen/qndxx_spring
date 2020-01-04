@@ -139,7 +139,9 @@
                     </tr>
                 </c:forEach>
             </table>
-<%--            <input class="btn btn-danger col" type="submit" name="Init" id="button2" value="重置名单">--%>
+            <br>
+            <input class="btn btn-danger col" type="submit" name="init" id="initBtn" value="重置名单" onclick="startModal(this)">
+            <br>
         </div>
         <br>
     </div>
@@ -175,14 +177,15 @@
                 <form>
                     <label>班级：${group.getGroupName()}</label><br>
                     <label>班级代号：${group.getGroupSec()}</label><br>
-                    <label for="oldPassword">原密码：</label>
-                    <input class="form-control" type="password" id="oldPassword" onblur="oldPasswordOnblur()"/>
+                    <label for="oldPassword">原密码</label>
+                    <input class="form-control" type="password" id="oldPassword" onblur="oldPasswordOnblur()" maxlength="16"/>
                     <div id="oldPasswordFeedback"></div>
-                    <label for="newPassword">新密码：</label>
-                    <input class="form-control" type="password" id="newPassword" onblur="newPasswordOnblur();newPasswordCommittedOnblur()"/>
+                    <label for="newPassword">新密码</label>
+                    <small class="text-muted" for="newPassword">新密码须不小于8位且不大于16位</small>
+                    <input class="form-control" type="password" id="newPassword" oninput="newPasswordOninput();newPasswordCommittedOninput()" maxlength="16"/>
                     <div id="newPasswordFeedback"></div>
-                    <label for="newPasswordCommitted">确认新密码：</label>
-                    <input class="form-control" type="password" id="newPasswordCommitted" onblur="newPasswordCommittedOnblur();newPasswordOnblur()"/>
+                    <label for="newPasswordCommitted">确认新密码</label>
+                    <input class="form-control" type="password" id="newPasswordCommitted" oninput="newPasswordCommittedOninput();newPasswordOninput()" maxlength="16"/>
                     <div id="newPasswordCommittedFeedback"></div>
                 </form>
             </div>

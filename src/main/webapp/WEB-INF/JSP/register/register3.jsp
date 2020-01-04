@@ -29,7 +29,7 @@
         </label>
 
         <div class="input-group mb-3">
-            <input type="text" value="${email}" class="form-control" id="adminEmail" aria-describedby="getCode" onblur="checkEmail()">
+            <input type="text" value="${email}" class="form-control" id="adminEmail" aria-describedby="getCode" onblur="checkEmail()" maxlength="30">
             <div class="input-group-append">
                 <input type="button" class="btn btn-outline-secondary" value="获取验证码" id="getCode" onclick="getCode()">
             </div>
@@ -38,7 +38,7 @@
     </div>
     <div id="checkDiv" class="col-md-7 col-lg-6 offset-xl-2 offset-lg-2">
         <label for="code">验证码</label>
-        <input type="text" class="form-control col-6 col-sm-6" id="code" onblur="checkCode()">
+        <input type="text" class="form-control col-6 col-sm-6" id="code" onblur="checkCode()" maxlength="6">
         <div id="codeFeedback"></div>
     </div>
     <div class="col-12 col-lg-8 offset-xl-2 offset-lg-2">

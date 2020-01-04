@@ -23,12 +23,12 @@
     </div>
     <div class="col-lg-4 col-12 offset-xl-2 offset-lg-2">
         <label for="school">学校</label>
-        <input type="text" value="${school}" class="form-control" id="school" placeholder="例如：北京大学" onblur="checkSchool()">
+        <input type="text" value="${school}" class="form-control" id="school" placeholder="例如：北京大学" maxlength="25" onblur="checkSchool()">
         <div id="schoolFeedback"></div>
     </div>
     <div class="col-lg-4 col-12">
         <label for="institution">学院</label>
-        <input type="text" value="${institution}" class="form-control" id="institution" placeholder="例如：计算机学院" onblur="checkInstitution()">
+        <input type="text" value="${institution}" class="form-control" id="institution" placeholder="例如：计算机学院" maxlength="25" onblur="checkInstitution()">
         <div id="institutionFeedback"></div>
     </div>
     <div class="col-12 col-lg-8 offset-xl-2 offset-lg-2">

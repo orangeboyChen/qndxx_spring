@@ -50,7 +50,7 @@ function register4Backward() {
 }
 
 function checkRealName() {
-    initProgress()
+    initProgress();
     if(checkIfEmpty($("#adminRealName").val())){
         setInputInvalid("#adminRealName","#adminRealNameFeedback","姓名不能为空");
         canContinue1=false;
@@ -64,7 +64,7 @@ function checkRealName() {
 }
 
 function checkPassword() {
-    initProgress()
+    initProgress();
     canContinue2=true;
     setInputValid("#adminPassword","#adminPasswordFeedback","");
     setInputValid("#adminPassword2","#adminPassword2Feedback","");
@@ -73,6 +73,16 @@ function checkPassword() {
 
     pn2(true);
     pn3(true);
+
+    if(!ifValidPassword(password1)){
+        setInputInvalid("#adminPassword","#adminPasswordFeedback","密码长度不符合要求");
+        setInputInvalid("#adminPassword2","#adminPassword2Feedback","");
+        pn2(false);
+        pn3(false);
+        canContinue2=false;
+        return;
+
+    }
 
     if(password1!==password2){
         setInputInvalid("#adminPassword2","#adminPassword2Feedback","确认密码与原密码不一致");
@@ -107,7 +117,6 @@ var ani2=0;
 var ani3=0;
 var MAX=93;
 function progressAnimation() {
-    console.log("ani4");
     $("#progress-bar").css("width",(preProgress+ani1+ani2+ani3)+"%");
     $("#progress-bar").attr("aria-valuenow",ani1+ani2+ani3+preProgress);
 }
@@ -115,7 +124,7 @@ function progressAnimation() {
 function pn3(bool) {
     if(preProgress<MAX){
         if(bool===true){
-            ani3=11;
+            ani3=5;
         }
         else{
             ani3=0;
@@ -126,7 +135,7 @@ function pn3(bool) {
             ani3=0;
         }
         else{
-            ani3=-11;
+            ani3=-5;
         }
     }
     progressAnimation();
@@ -134,3 +143,7 @@ function pn3(bool) {
 
 var checkProgress = false;
 var preProgress=66;
+
+function ifValidPassword(password) {
+    return password.length >= 8 && password.length <= 16;
+}

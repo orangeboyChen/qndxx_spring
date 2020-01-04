@@ -25,13 +25,13 @@
         <label for="groupName">班级<br>
             <small class="text-muted" id="groupNameLabel">请同时输入届级</small>
         </label>
-        <input type="text" value="${groupName}" class="form-control" id="groupName" placeholder="例如：19-计科7" onblur="checkGroupName()">
+        <input type="text" value="${groupName}" class="form-control" id="groupName" placeholder="例如：19-计科7" onblur="checkGroupName()" maxlength="15">
         <div id="groupNameFeedback"></div>
         <br>
         <label for="groupSec">班级代号<br>
             <small class="text-muted" id="groupSecLabel">可以帮助同学们快速找到班级</small>
         </label>
-        <input type="text" value="${groupSec}" class="form-control" id="groupSec" placeholder="例如：pku19zihuan" onblur="checkGroupSec()">
+        <input type="text" value="${groupSec}" class="form-control" id="groupSec" placeholder="例如：pku19zihuan" onblur="checkGroupSec()" maxlength="15">
         <div id="groupSecFeedback"></div>
     </div>
     <div class="col-12 col-lg-8 offset-xl-2 offset-lg-2">

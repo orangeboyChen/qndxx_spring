@@ -1,3 +1,4 @@
+var r = new RegExp("^[012]\\d-[\\S][^-]+$");
 function register2Forward() {
     if (checkIfEmpty($("#groupName").val())||checkIfEmpty($("#groupSec").val())){
         if(checkIfEmpty($("#groupName").val())){
@@ -6,8 +7,13 @@ function register2Forward() {
         if(checkIfEmpty($("#groupSec").val())){
             setInputInvalid("#groupSec","#groupSecFeedback","班级代号不能为空");
         }
-        return 0;
+        return;
     }
+    else if(!r.test($("#groupName").val())){
+        setInputInvalid("#groupName","#groupNameFeedback","请以 届级-班级 的方式填写班级");
+        return;
+    }
+
 
     allLock();
     $.post({
@@ -62,10 +68,14 @@ function register2Backward() {
 }
 
 function checkGroupName() {
-    initProgress()
+    initProgress();
     if(checkIfEmpty($("#groupName").val())){
         pn1(false);
         setInputInvalid("#groupName","#groupNameFeedback","班级名称不能为空");
+    }
+    else if(!r.test($("#groupName").val())){
+        pn1(false);
+        setInputInvalid("#groupName","#groupNameFeedback","请以 届级-班级 的方式填写班级");
     }
     else{
         pn1(true);
@@ -94,7 +104,7 @@ function checkGroupName() {
 }
 
 function checkGroupSec() {
-    initProgress()
+    initProgress();
     if(checkIfEmpty($("#groupSec").val())){
         pn2(false);
         setInputInvalid("#groupSec","#groupSecFeedback","班级名称不能为空");

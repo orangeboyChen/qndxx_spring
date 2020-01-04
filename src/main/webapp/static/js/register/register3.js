@@ -13,10 +13,21 @@ function register3Forward() {
         }
         return;
     }
-    else if(!regex.test($("#adminEmail").val())){
+
+    var isReturn = false;
+    if(!regex.test($("#adminEmail").val())){
         setInputInvalid("#adminEmail","#adminEmailFeedback","邮箱地址不正确");
         pn1(false);
+        isReturn=true;
     }
+
+    if($("#code").val().length!==6){
+        setInputInvalid("#code","#codeFeedback","验证码长度不正确");
+        $("#code").addClass( "col-6 col-sm-6");
+        pn2(false);
+        isReturn=true;
+    }
+    if(isReturn) return;
 
     allLock();
     $.post({
@@ -138,8 +149,13 @@ function checkCode() {
         $("#code").addClass( "col-6 col-sm-6");
         pn2(false);
     }
+    else if($("#code").val().length!==6){
+        setInputInvalid("#code","#codeFeedback","验证码长度不正确");
+        $("#code").addClass( "col-6 col-sm-6");
+        pn2(false);
+    }
     else{
-        setInputValid("#code","#codeEmailFeedback","");
+        setInputNormal("#code","#codeEmailFeedback","");
         $("#code").addClass( "col-6 col-sm-6");
         pn2(true);
     }
@@ -161,3 +177,4 @@ var MAX=66;
 
 var checkProgress = false;
 var preProgress=44;
+

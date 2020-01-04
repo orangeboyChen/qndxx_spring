@@ -12,10 +12,10 @@ public interface StudentService {
     Student queryValidStudent(Student student, Group group);
     int getCompletedCount(Group group);
     int getStudentRank(Student student);
-    List<Student> getCompletedStudents(Group group);
-    List<Student> getNotCompletedRequiredStudents(Group group);
+    List<Student> queryCompletedStudents(Group group);
+    List<Student> queryNotCompletedRequiredStudents(Group group);
     Student queryStudentByName(String name, Group group);
     void removeStudent(Student student);
-    void addStudent(Student student);
+    void insertStudent(Student student);
 
 }

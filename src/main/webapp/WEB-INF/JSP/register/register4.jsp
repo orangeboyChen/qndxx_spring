@@ -30,14 +30,14 @@
 
         <br>
         <label for="adminPassword">管理员密码<br>
-            <small class="text-muted" id="adminPasswordLabel">验证管理员的依据</small>
-        </label><input type="password" value="${password}" class="form-control" id="adminPassword" oninput="checkPassword()">
+            <small class="text-muted" id="adminPasswordLabel">验证管理员的依据且必须大于8位，小于16位</small>
+        </label><input type="password" value="${password}" class="form-control" id="adminPassword" oninput="checkPassword()" maxlength="16">
         <div id="adminPasswordFeedback"></div>
 
         <br>
         <label for="adminPassword2">再次输入密码<br>
             <small class="text-muted" id="adminPasswordLabel2">请输入相同的密码</small>
-        </label><input type="password" value="${password}" class="form-control" id="adminPassword2" oninput="checkPassword()">
+        </label><input type="password" value="${password}" class="form-control" id="adminPassword2" oninput="checkPassword()" maxlength="16">
         <div id="adminPassword2Feedback"></div>
 
     </div>

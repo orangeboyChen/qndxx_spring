@@ -12,15 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.imageio.IIOException;
-import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 @Controller
 @RequestMapping("/register")
@@ -85,6 +79,10 @@ public class RegisterController {
 
 
         if(school!=null||institution!=null){
+            if(school.length()>25||institution.length()>25){
+                model.addAttribute("info","小伙子别皮哦");
+                return "fail";
+            }
             School registerSchool = null;
 //        try {
 //            registerSchool = (School) session.getAttribute(SCHOOL);
@@ -115,6 +113,10 @@ public class RegisterController {
         if(register.getSchool()==null) return RESPONSE_REGIST2;
 
         if(groupName!=null||groupSec!=null){
+            if(groupName.length()>15||groupSec.length()>15){
+                model.addAttribute("info","小伙子别逗我哦");
+                return "fail";
+            }
             School registerSchool = (School) session.getAttribute(SCHOOL);
             if(registerSchool.isOldSchool()) {
                 Group sameGroup = groupService.queryGroupBySchoolAndName(groupName,registerSchool);
@@ -145,6 +147,11 @@ public class RegisterController {
         Register register = registerService.getRegisterFromSession(session);
 
         if(register.getGroupName()==null) return RESPONSE_REGIST3;
+
+        if(code.length()!=6){
+            model.addAttribute("info","小朋友皮皮更健康哦");
+            return "fail";
+        }
 
         Email requestEmail = new Email(email, code);
         Email checkEmail;
@@ -177,9 +184,14 @@ public class RegisterController {
     }
 
     @RequestMapping(REQUEST_REGIST5)
-    public String getRegister5Page(String realName, String password, HttpSession session){
+    public String getRegister5Page(String realName, String password, HttpSession session, Model model){
         Register register = registerService.getRegisterFromSession(session);
         if(register.getEmail()==null) return RESPONSE_REGIST4;
+
+        if(password.length()<8||password.length()>16){
+            model.addAttribute("info","别皮哦小朋友");
+            return "../fail";
+        }
 
         register.setRealName(realName);
         register.setPassword(password);
