@@ -33,4 +33,6 @@ public interface GroupsDao {
             "set groupSec=#{groupSec}, groupName=#{groupName}, schoolId=#{schoolId}, saying=#{saying},adminId=#{adminId},startTime=#{startTime} " +
             "where groupId=#{groupId} ")
     void updateGroup(Group group);
+
+
 }

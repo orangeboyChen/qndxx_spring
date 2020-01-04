@@ -16,9 +16,6 @@ public class StudentServiceImpl implements StudentService {
     private StudentsDao studentsDao;
     @Autowired
     private GroupService groupService;
-    public void setStudentsDao(StudentsDao studentsDao) {
-        this.studentsDao = studentsDao;
-    }
     @Override
     public void setStudentCompleteState(Student student, boolean state) {
         student.setCompleteState(state);
@@ -37,12 +34,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public int getCompletedCount(Group group){
-        List<Student> students= studentsDao.getStudentList(group);
-        int count=0;
-        for(Student student : students){
-            if(student.isCompleteState()) count++;
-        }
-        return count;
+        return studentsDao.queryCompletedStudents(group).size();
     }
 
 
@@ -60,27 +52,13 @@ public class StudentServiceImpl implements StudentService {
 
 
     @Override
-    public List<Student> getCompletedStudents(Group group) {
-        List<Student> students= studentsDao.getStudentList(group);
-        List<Student> completedStudents=new ArrayList<Student>();
-        for (Student student : students) {
-            if (student.isCompleteState()) {
-                completedStudents.add(student);
-            }
-        }
-        return completedStudents;
+    public List<Student> queryCompletedStudents(Group group) {
+        return studentsDao.queryCompletedStudents(group);
     }
 
     @Override
-    public List<Student> getNotCompletedRequiredStudents(Group group) {
-        List<Student> students= studentsDao.getStudentList(group);
-        List<Student> qStudents=new ArrayList<Student>();
-        for (Student student : students) {
-            if ((!student.isCompleteState())&&student.isRequireState()) {
-                qStudents.add(student);
-            }
-        }
-        return qStudents;
+    public List<Student> queryNotCompletedRequiredStudents(Group group) {
+        return studentsDao.queryNotCompletedAndRequiredStudent(group);
     }
 
     @Override
@@ -94,8 +72,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void addStudent(Student student) {
-        studentsDao.addStudent(student);
+    public void insertStudent(Student student) {
+        studentsDao.insertStudent(student);
     }
 
     @Override

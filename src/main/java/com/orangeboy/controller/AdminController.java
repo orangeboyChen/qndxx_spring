@@ -35,7 +35,7 @@ public class AdminController {
         adminService.updateAdmin(admin);
         model.addAttribute("lastTime",session.getAttribute("adminLastTime"));
         model.addAttribute("group",admin.getGroup());
-        model.addAttribute("goodStudents",adminService.getCompletedStudents(admin));
+        model.addAttribute("goodStudents",adminService.queryCompletedStudents(admin));
         model.addAttribute("studentsList",adminService.getAllStudents(admin));
         return "admin";
     }
@@ -115,6 +115,7 @@ public class AdminController {
     public String changePassword(String oldPassword,String newPassword,HttpSession session){
         Admin admin=adminService.getAdminFromSession(session);
         if(!admin.getPassword().equals(oldPassword)) return "false";
+        if(newPassword.length()<8||newPassword.length()>16) return "false";
         admin.setPassword(newPassword);
         adminService.changeAdminPassword(admin);
         return "true";
@@ -159,7 +160,7 @@ public class AdminController {
         Admin admin=adminService.getAdminFromSession(session);
         Student sameStudent=studentService.queryStudentById(student.getId(),admin.getGroup());
         if(sameStudent==null){
-            adminService.addStudent(student,admin);
+            adminService.insertStudent(student,admin);
             return "true";
         }
         else{
@@ -209,7 +210,6 @@ public class AdminController {
     @RequestMapping("/addMutiple")
     @ResponseBody
     public addMutipleData addMutiple(String[] ids, String[] names, HttpSession session){
-
         Admin admin=adminService.getAdminFromSession(session);
         List<Student> sameIdStudents=new ArrayList<Student>();
         List<Student> completedStudents=new ArrayList<Student>();
@@ -220,7 +220,7 @@ public class AdminController {
                 continue;
             }
             Student student=new Student(ids[i],names[i],admin.getGroup());
-            studentService.addStudent(student);
+            studentService.insertStudent(student);
             completedStudents.add(student);
         }
 
@@ -231,4 +231,14 @@ public class AdminController {
     public String getAddStudents(){
         return "addMutiple";
     }
+
+
+    @RequestMapping("/init")
+    @ResponseBody
+    public String initStudents(HttpSession session){
+        Admin admin=adminService.getAdminFromSession(session);
+        adminService.removeGroupStudents(admin.getGroup());
+        return "true";
+    }
+
 }

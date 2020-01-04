@@ -68,7 +68,7 @@ public class SuperAdminController {
         groupService.addGroup(group);
         group = groupService.queryGroupBySec(register.getGroupSec());
 
-        String code = mUtil.getRandomStr(25);
+        String code = mUtil.getRandomStr(150);
         Admin admin = new Admin("admin",group.getGroupId(),register.getPassword(),register.getRealName(),register.getEmail(), code);
         adminService.insertAdmin(admin);
         admin = adminService.queryAdminByEmail(register.getEmail());

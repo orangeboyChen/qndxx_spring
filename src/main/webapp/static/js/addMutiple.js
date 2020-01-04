@@ -104,7 +104,6 @@ function recheck() {
             "姓名" +
             "</th></tr>");
 
-        console.log(ids);
         for(var m=0;m<ids.length;m++){
             $("#submitModalHead1").after("<tr name=\"submitModalData1\"><td>" +
                 ids[m] +

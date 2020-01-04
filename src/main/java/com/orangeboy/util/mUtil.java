@@ -55,6 +55,8 @@ public class mUtil {
                         "        <p>学院：" + register.getInstitution() + "</p>\n" +
                         "        <p>班级：" + register.getGroupName() + "</p>\n" +
                         "        <p>班级代号：" + register.getGroupSec() + "</p>\n" +
+                        "        <br>\n" +
+                        "        <p>登录团支书账号时，在首页输入正确的班级代号后，于学号输入 admin 。输入正确的密码并提交即可进入管理端。</p>\n" +
                         "        <br><br>\n" +
                         "        <p>请<a href='http://qndxx.nowcent.cn/quickLogin/" + address + "'>点击这里</a>批量添加学生。感谢您对青年大学习在线提交系统的支持！</p>\n" +
                 "        <br><br>\n" +

@@ -4,13 +4,11 @@ import com.orangeboy.pojo.Admin;
 import com.orangeboy.pojo.Group;
 import com.orangeboy.pojo.Student;
 import com.orangeboy.service.*;
-import com.orangeboy.util.mUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.mail.Session;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -146,8 +144,8 @@ public class LoginController {
     public String getRankTable(HttpSession session,Model model){
         Group group=(Group)session.getAttribute("group");
         if(group!=null){
-            List<Student> badStudents=studentService.getNotCompletedRequiredStudents(group);
-            List<Student> goodStudents=studentService.getCompletedStudents(group);
+            List<Student> badStudents=studentService.queryNotCompletedRequiredStudents(group);
+            List<Student> goodStudents=studentService.queryCompletedStudents(group);
             Student[] topGoodStudents=new Student[3];
             for(Student s : goodStudents){
                 if(s.getRank()==1)topGoodStudents[0]=s;

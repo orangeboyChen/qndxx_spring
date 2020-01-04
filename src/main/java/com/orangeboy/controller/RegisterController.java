@@ -12,14 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.imageio.IIOException;
-import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 @Controller
 @RequestMapping("/register")
@@ -57,7 +52,7 @@ public class RegisterController {
 
 
     @RequestMapping(REQUEST_REGIST)
-    public String getRegistPage(HttpSession session){
+    public String getRegisterPage(HttpSession session){
         Register register = (Register) session.getAttribute(REGISTER);
         if(register==null){
             register=new Register();
@@ -67,17 +62,28 @@ public class RegisterController {
     }
 
     @RequestMapping(REQUEST_REGIST1)
-    public String getRegist1Page(HttpSession session,Model model){
+    public String getRegister1Page(HttpSession session,Model model){
         Register register = registerService.getRegisterFromSession(session);
         model.addAttribute("school",register.getSchool());
         model.addAttribute("institution",register.getInstitution());
+
+        //Progress
+
+        model.addAttribute("progress",getProgress(register));
         return RESPONSE_REGIST1;
     }
 
     @RequestMapping(REQUEST_REGIST2)
-    public String getRegist2Page(String school, String institution, HttpSession session,Model model){
+    public String getRegister2Page(String school, String institution, HttpSession session,Model model){
         Register register = registerService.getRegisterFromSession(session);
-        School registerSchool = null;
+
+
+        if(school!=null||institution!=null){
+            if(school.length()>25||institution.length()>25){
+                model.addAttribute("info","小伙子别皮哦");
+                return "fail";
+            }
+            School registerSchool = null;
 //        try {
 //            registerSchool = (School) session.getAttribute(SCHOOL);
 //        }catch (Exception e){}
@@ -87,48 +93,65 @@ public class RegisterController {
             if(registerSchool==null){
                 registerSchool = new School(school,institution);
 //            }
+            }
+            register.setSchool(registerSchool);
+            session.setAttribute(SCHOOL,registerSchool);
         }
-        register.setSchool(registerSchool);
-        session.setAttribute(SCHOOL,registerSchool);
+
 
         model.addAttribute("groupName",register.getGroupName());
         model.addAttribute("groupSec",register.getGroupSec());
+
+
+        model.addAttribute("progress",getProgress(register));
         return RESPONSE_REGIST2;
     }
 
     @RequestMapping(REQUEST_REGIST3)
-    public String getRegist3Page(String groupName, String groupSec, HttpSession session, HttpServletResponse response, Model model) throws IOException {
+    public String getRegister3Page(String groupName, String groupSec, HttpSession session, HttpServletResponse response, Model model) throws IOException {
         Register register = registerService.getRegisterFromSession(session);
         if(register.getSchool()==null) return RESPONSE_REGIST2;
-        School registerSchool = (School) session.getAttribute(SCHOOL);
-        if(registerSchool.isOldSchool()) {
-            Group sameGroup = groupService.queryGroupBySchoolAndName(groupName,registerSchool);
-            if(sameGroup!=null){
-                response.getWriter().println("EXISTING_GROUP");
+
+        if(groupName!=null||groupSec!=null){
+            if(groupName.length()>15||groupSec.length()>15){
+                model.addAttribute("info","小伙子别逗我哦");
+                return "fail";
+            }
+            School registerSchool = (School) session.getAttribute(SCHOOL);
+            if(registerSchool.isOldSchool()) {
+                Group sameGroup = groupService.queryGroupBySchoolAndName(groupName,registerSchool);
+                if(sameGroup!=null){
+                    response.getWriter().println(1);
+                    return null;
+                }
+            }
+
+            Group sameSecGroup=groupService.queryGroupBySec(groupSec);
+            if(sameSecGroup!=null){
+                response.getWriter().println(2);
                 return null;
             }
+
+            Group group=new Group(groupName, groupSec);
+            register.setGroup(group);
+            session.setAttribute(GROUP,group);
         }
-
-        Group sameSecGroup=groupService.queryGroupBySec(groupSec);
-        if(sameSecGroup!=null){
-            response.getWriter().println("EXISTING_GROUPSEC");
-            return null;
-        }
-
-        Group group=new Group(groupName, groupSec);
-        register.setGroup(group);
-        session.setAttribute(GROUP,group);
-
 
         model.addAttribute("email",register.getEmail());
+        model.addAttribute("progress",getProgress(register));
         return RESPONSE_REGIST3;
     }
 
     @RequestMapping(REQUEST_REGIST4)
-    public String getRegist4Page(String email, String code, HttpSession session, HttpServletResponse response,Model model) throws IOException{
+    public String getRegister4Page(String email, String code, HttpSession session, HttpServletResponse response,Model model) throws IOException{
         Register register = registerService.getRegisterFromSession(session);
 
         if(register.getGroupName()==null) return RESPONSE_REGIST3;
+
+        if(code.length()!=6){
+            model.addAttribute("info","小朋友皮皮更健康哦");
+            return "fail";
+        }
 
         Email requestEmail = new Email(email, code);
         Email checkEmail;
@@ -156,13 +179,19 @@ public class RegisterController {
 
         model.addAttribute("realName",register.getRealName());
         model.addAttribute("password",register.getPassword());
+        model.addAttribute("progress",getProgress(register));
         return RESPONSE_REGIST4;
     }
 
     @RequestMapping(REQUEST_REGIST5)
-    public String getRegist5Page(String realName, String password, HttpSession session){
+    public String getRegister5Page(String realName, String password, HttpSession session, Model model){
         Register register = registerService.getRegisterFromSession(session);
         if(register.getEmail()==null) return RESPONSE_REGIST4;
+
+        if(password.length()<8||password.length()>16){
+            model.addAttribute("info","别皮哦小朋友");
+            return "../fail";
+        }
 
         register.setRealName(realName);
         register.setPassword(password);
@@ -172,5 +201,13 @@ public class RegisterController {
         session.setAttribute(REGISTER,null);
         session.setAttribute(SCHOOL,null);
         return RESPONSE_REGIST5;
+    }
+
+    private String getProgress(Register register){
+        if(register.getRealName()!=null) return "93";
+        else if(register.getEmail()!=null) return "66";
+        else if(register.getGroupSec()!=null) return "44";
+        else if(register.getInstitution()!=null) return "22";
+        else return "0";
     }
 }

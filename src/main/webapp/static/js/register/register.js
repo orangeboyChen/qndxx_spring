@@ -6,6 +6,7 @@ $(document).ready(function () {
     homeUrl=$("#rootUrl").val();
     //pageForwardFadeIn();
     $("body").hide().fadeIn(100);
+
 });
 
 function registerForward() {
@@ -119,4 +120,58 @@ function showErrorAlert(str) {
     $("#alert").fadeOut(3000,function () {
         $("#alertDiv").css("display","none");
     });
+}
+
+function progressAnimation() {
+    $("#progress-bar").css("width",(preProgress+ani1+ani2)+"%");
+    $("#progress-bar").attr("aria-valuenow",preProgress+ani1+ani2);
+
+}
+
+var MAX;
+function pn1(bool) {
+    if(preProgress<MAX){
+        if(bool===true){
+            ani1=11;
+        }
+        else{
+            ani1=0;
+        }
+    }
+    else{
+        if(bool===true){
+            ani1=0;
+        }
+        else{
+            ani1=-11;
+        }
+    }
+    progressAnimation();
+}
+
+function pn2(bool) {
+    if(preProgress<MAX){
+        if(bool===true){
+            ani2=11;
+        }
+        else{
+            ani2=0;
+        }
+    }
+    else{
+        if(bool===true){
+            ani2=0;
+        }
+        else{
+            ani2=-11;
+        }
+    }
+    progressAnimation();
+}
+
+function initProgress() {
+    if(!checkProgress) {
+        preProgress=parseInt($("#progress-bar").attr("aria-valuenow"));
+        checkProgress=true;
+    }
 }

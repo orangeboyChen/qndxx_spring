@@ -14,6 +14,13 @@
         <h5>欢迎使用青年大学习提交系统！</h5>
         <p class="text-muted">(4/4)填写个人信息</p>
     </div>
+    <div class="col-12 col-xl-8 offset-xl-2 col-lg-8 offset-lg-2">
+        <div class="progress">
+            <div class="progress-bar" id="progress-bar" role="progressbar" style="width: ${progress}%" aria-valuenow="${progress}" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        <br>
+    </div>
+
     <div class="col-12 col-lg-8 offset-xl-2 offset-lg-2">
         <label for="adminRealName">管理员真实姓名<br>
             <small class="text-muted" id="adminRealNameLabel">输入真实姓名以便通过审核</small>
@@ -23,14 +30,14 @@
 
         <br>
         <label for="adminPassword">管理员密码<br>
-            <small class="text-muted" id="adminPasswordLabel">验证管理员的依据</small>
-        </label><input type="password" value="${password}" class="form-control" id="adminPassword" oninput="checkPassword()">
+            <small class="text-muted" id="adminPasswordLabel">验证管理员的依据且必须大于8位，小于16位</small>
+        </label><input type="password" value="${password}" class="form-control" id="adminPassword" oninput="checkPassword()" maxlength="16">
         <div id="adminPasswordFeedback"></div>
 
         <br>
         <label for="adminPassword2">再次输入密码<br>
             <small class="text-muted" id="adminPasswordLabel2">请输入相同的密码</small>
-        </label><input type="password" value="${password}" class="form-control" id="adminPassword2" oninput="checkPassword()">
+        </label><input type="password" value="${password}" class="form-control" id="adminPassword2" oninput="checkPassword()" maxlength="16">
         <div id="adminPassword2Feedback"></div>
 
     </div>

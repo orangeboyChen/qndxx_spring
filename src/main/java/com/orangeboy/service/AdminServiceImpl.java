@@ -3,6 +3,7 @@ package com.orangeboy.service;
 import com.orangeboy.dao.AdminsDao;
 import com.orangeboy.dao.StudentsDao;
 import com.orangeboy.pojo.Admin;
+import com.orangeboy.pojo.Group;
 import com.orangeboy.pojo.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,13 +19,6 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     private AdminsDao adminsDao;
 
-    public void setAdminsDao(AdminsDao adminsDao) {
-        this.adminsDao = adminsDao;
-    }
-    public void setStudentsDao(StudentsDao studentsDao) {
-        this.studentsDao = studentsDao;
-    }
-
     @Override
     public void setStudentRequireState(Student student, boolean state) {
         student.setRequireState(state);
@@ -32,45 +26,18 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void initStudentAll(Admin admin) {
-        List<Student> list= studentsDao.getStudentList(admin.getGroup());
-        for(Student student : list){
-            student.setRequireState(true);
-            student.setCompleteState(false);
-            student.setRank(0);
-            studentsDao.updateStudent(student);
-        }
-    }
-
-    @Override
     public void initStudentAllRequireState(Admin admin) {
-        List<Student> list= studentsDao.getStudentList(admin.getGroup());
-        for(Student student : list){
-            student.setRequireState(true);
-            studentsDao.updateStudent(student);
-        }
+        studentsDao.setAllRequired(admin.getGroup());
     }
 
     @Override
     public void initStudentAllCompleteState(Admin admin) {
-        List<Student> list= studentsDao.getStudentList(admin.getGroup());
-        for(Student student : list){
-            student.setCompleteState(false);
-            student.setRank(0);
-            studentsDao.updateStudent(student);
-        }
+        studentsDao.initTerm(admin.getGroup());
     }
 
     @Override
-    public List<Student> getRequiredStudents(Admin admin) {
-        List<Student> students= studentsDao.getStudentList(admin.getGroup());
-        List<Student> requiredStudents=new ArrayList<Student>();
-        for (Student student : students) {
-            if (student.isRequireState()) {
-                requiredStudents.add(student);
-            }
-        }
-        return requiredStudents;
+    public List<Student> queryRequiredStudents(Admin admin) {
+        return studentsDao.queryRequiredStudents(admin.getGroup());
     }
 
     @Override
@@ -84,16 +51,10 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<Student> getCompletedStudents(Admin admin) {
-        List<Student> students= studentsDao.getStudentList(admin.getGroup());
-        List<Student> completedStudents=new ArrayList<Student>();
-        for (Student student : students) {
-            if (student.isCompleteState()) {
-                completedStudents.add(student);
-            }
-        }
-        if(completedStudents.size()<=0) return null;
-        else return completedStudents;
+    public List<Student> queryCompletedStudents(Admin admin) {
+        List<Student> studentList = studentsDao.queryCompletedStudents(admin.getGroup());
+        if(studentList.size()>0) return studentList;
+        else return null;
     }
 
     @Override
@@ -118,9 +79,9 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void addStudent(Student student, Admin admin) {
+    public void insertStudent(Student student, Admin admin) {
         student.setGroupId(admin.getGroupId());
-        studentsDao.addStudent(student);
+        studentsDao.insertStudent(student);
     }
 
     @Override
@@ -136,5 +97,10 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Admin queryAdminByRandom(String random) {
         return adminsDao.queryAdminByRandom(random);
+    }
+
+    @Override
+    public void removeGroupStudents(Group group) {
+        studentsDao.removeGroupStudents(group);
     }
 }

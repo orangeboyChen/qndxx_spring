@@ -11,7 +11,7 @@ public interface AdminsDao {
     Admin queryAdmin(Admin admin);
 
     @Update("update Admins " +
-            "set lastLoginTime=#{lastLoginTime} " +
+            "set lastLoginTime=#{lastLoginTime},random=#{random} " +
             "where id=#{id}")
     void updateAdmin(Admin admin);
 

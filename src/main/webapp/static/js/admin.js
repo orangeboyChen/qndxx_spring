@@ -9,17 +9,6 @@ $(document).ready(function(){
     rootUrl = $("#requestUrl").val()+"/admin";
     $("#alert").css("display","none");
     $("body").hide().fadeIn(150);
-    // $("#ck").on('click',function(){
-    //     $("input[name='requiredYes']").attr("disabled",true);
-    //     $("input[name='requiredYes']").removeClass("btn-primary");
-    //     $("input[name='requiredYes']").removeClass("btn-light");
-    //     $("input[name='requiredYes']").addClass("btn-light");
-    //
-    //     $("input[name='requiredNo']").attr("disabled",false);
-    //     $("input[name='requiredNo']").removeClass("btn-primary");
-    //     $("input[name='requiredNo']").removeClass("btn-light");
-    //     $("input[name='requiredNo']").addClass("btn-primary");
-    // });
 });
 
 function alertSuccess(str) {
@@ -215,6 +204,9 @@ function startModal(obj) {
             var name= $("h6[name='"+id+"']").text();
             $("#modalContent").html("你真的要删除"+name+"吗？你的良心不会痛吗？");
             break;
+        case 'init':
+            $("#modalContent").html("你真的想要删掉所有人以体验删库的快感？");
+            break;
     }
     $("#makeSureModal").modal("show");
 }
@@ -231,10 +223,32 @@ function modalSubmitted() {
             newTerm();
             break;
         case 'delete':
-            deleteStudent(todoObj)
+            deleteStudent(todoObj);
             break;
+        case 'init':
+            initStudents();
     }
     todoObj=null;
+}
+
+function initStudents() {
+    $.post({
+        url:rootUrl+"/init",
+        success:function () {
+            $("#completedTable").remove();
+            $("#completedText").remove();
+            $("#newCompletedText").text("暂未有学生完成");
+            $("#studentTable").empty().html("<tr id=\"tableHead\"><th>姓名及学号</th><th>是否要求完成</th><th>指令</th></tr>");
+            alertSuccess("已删库");
+        },
+        error:function(){
+            alertFail("删库失败，你网络太差了。要不要试试\"rm -rf /\"？");
+        },
+        complete:function () {
+            $("#modalSubmittedBtn").attr("disabled",false);
+            $("#makeSureModal").modal("hide");
+        }
+    });
 }
 
 function allRequireYes() {
@@ -276,8 +290,8 @@ var canChangePassword2=false;
 var canChangePassword3=false;
 function passwordSubmitted() {
     oldPasswordOnblur();
-    newPasswordOnblur();
-    newPasswordCommittedOnblur();
+    newPasswordCommittedOninput();
+    newPasswordOninput();
     if(canChangePassword1&&canChangePassword2&&canChangePassword3){
         $("#passwordSubmittedBtn").attr("disabled",true);
         $.post({
@@ -354,79 +368,64 @@ function oldPasswordOnblur() {
     }
 }
 
-function newPasswordOnblur() {
+function newPasswordOninput() {
     canChangePassword2=false;
     if($("#newPassword").val().length===0){
-        $("#newPassword").removeClass();
-        $("#newPassword").addClass("form-control is-invalid");
+        $("#newPassword").removeClass().addClass("form-control is-invalid");
         $("#newPasswordFeedback").show();
+        $("#newPasswordFeedback").removeClass().addClass("invalid-feedback").html("新密码不能为空");
+    }
+    else if($("#newPassword").val()===$("#oldPassword").val()){
+        $("#newPassword").removeClass().addClass("form-control is-invalid");
+        $("#newPasswordFeedback").show();
+        $("#newPasswordFeedback").removeClass().addClass("invalid-feedback").html("新密码不能与原密码相同");
+    }
+    else if(!ifValidPassword($("#newPassword").val())){
+        $("#newPassword").removeClass().addClass("form-control is-invalid");
+        $("#newPasswordCommitted").addClass("form-control is-invalid");
+        $("#newPasswordFeedback").show();
+        $("#newPasswordFeedback").removeClass().addClass("invalid-feedback").html("密码长度不符合要求");
+    }
+    else {
+        $("#newPassword").removeClass();
+        $("#newPassword").addClass("form-control is-valid");
+        $("#newPasswordFeedback").hide();
         $("#newPasswordFeedback").removeClass();
-        $("#newPasswordFeedback").addClass("invalid-feedback");
-        $("#newPasswordFeedback").html("新密码不能为空");
+        canChangePassword2 = true;
     }
-    else{
-        if($("#newPassword").val()===$("#oldPassword").val()){
-            $("#newPassword").removeClass();
-            $("#newPassword").addClass("form-control is-invalid");
-            $("#newPasswordFeedback").show();
-            $("#newPasswordFeedback").removeClass();
-            $("#newPasswordFeedback").addClass("invalid-feedback");
-            $("#newPasswordFeedback").html("新密码不能与原密码相同");
 
-        }
-        else {
-            $("#newPassword").removeClass();
-            $("#newPassword").addClass("form-control is-valid");
-            $("#newPasswordFeedback").hide();
-            $("#newPasswordFeedback").removeClass();
-            canChangePassword2 = true;
-        }
-    }
 }
 
-function newPasswordCommittedOnblur() {
+function newPasswordCommittedOninput() {
     canChangePassword3=false;
     if($("#newPasswordCommitted").val().length===0){
+        $("#newPasswordCommitted").removeClass().addClass("form-control is-invalid");
+        $("#newPasswordCommittedFeedback").show();
+        $("#newPasswordCommittedFeedback").removeClass().addClass("invalid-feedback").html("确认密码不能为空");
+    }
+    else if($("#newPasswordCommitted").val()===$("#newPassword").val()){
+        $("#newPasswordCommitted").removeClass();
+        $("#newPasswordCommitted").addClass("form-control is-valid");
+        $("#newPasswordCommittedFeedback").hide();
+        $("#newPasswordCommittedFeedback").removeClass();
+        canChangePassword3=true;
+    }
+    else {
         $("#newPasswordCommitted").removeClass();
         $("#newPasswordCommitted").addClass("form-control is-invalid");
         $("#newPasswordCommittedFeedback").show();
-        $("#newPasswordCommittedFeedback").removeClass();
-        $("#newPasswordCommittedFeedback").addClass("invalid-feedback");
-        $("#newPasswordCommittedFeedback").html("确认密码不能为空");
-    }
-    else{
-        if($("#newPasswordCommitted").val()===$("#newPassword").val()){
-            $("#newPasswordCommitted").removeClass();
-            $("#newPasswordCommitted").addClass("form-control is-valid");
-            $("#newPasswordCommittedFeedback").hide();
-            $("#newPasswordCommittedFeedback").removeClass();
-            canChangePassword3=true;
-        }
-        else {
-            $("#newPasswordCommitted").removeClass();
-            $("#newPasswordCommitted").addClass("form-control is-invalid");
-            $("#newPasswordCommittedFeedback").show();
-            $("#newPasswordCommittedFeedback").removeClass();
-            $("#newPasswordCommittedFeedback").addClass("invalid-feedback");
-            $("#newPasswordCommittedFeedback").html("确认密码与新密码不一致");
-        }
+        $("#newPasswordCommittedFeedback").removeClass().addClass("invalid-feedback").html("确认密码与新密码不一致");
     }
 }
 
 function changePasswordModalCanceled() {
-    $("#oldPassword").removeClass();
-    $("#oldPassword").addClass("form-control");
-    $("#oldPassword").val("");
+    $("#oldPassword").removeClass().addClass("form-control").val("");
     $("#oldPasswordFeedback").hide();
 
-    $("#newPassword").removeClass();
-    $("#newPassword").addClass("form-control");
-    $("#newPassword").val("");
+    $("#newPassword").removeClass().addClass("form-control").val("");
     $("#newPasswordFeedback").hide();
 
-    $("#newPasswordCommitted").removeClass();
-    $("#newPasswordCommitted").addClass("form-control");
-    $("#newPasswordCommitted").val("");
+    $("#newPasswordCommitted").removeClass().addClass("form-control").val("");
     $("#newPasswordCommittedFeedback").hide();
 }
 
@@ -436,11 +435,8 @@ function addStudentIdOnblur() {
     addStudent1=false;
     if(checkIfEmpty($("#addStudentId").val())){
         $("#addStudentIdFeedback").show();
-        $("#addStudentIdFeedback").removeClass();
-        $("#addStudentIdFeedback").addClass("invalid-feedback");
-        $("#addStudentIdFeedback").html("学号不能为空");
-        $("#addStudentId").removeClass();
-        $("#addStudentId").addClass("form-control is-invalid");
+        $("#addStudentIdFeedback").removeClass().addClass("invalid-feedback").html("学号不能为空");
+        $("#addStudentId").removeClass().addClass("form-control is-invalid");
     }
     else{
         $.post({
@@ -456,11 +452,8 @@ function addStudentIdOnblur() {
                 }
                 else{
                     $("#addStudentIdFeedback").show();
-                    $("#addStudentIdFeedback").removeClass();
-                    $("#addStudentIdFeedback").addClass("invalid-feedback");
-                    $("#addStudentIdFeedback").html("学号已被使用");
-                    $("#addStudentId").removeClass();
-                    $("#addStudentId").addClass("form-control is-invalid");
+                    $("#addStudentIdFeedback").removeClass().addClass("invalid-feedback").html("学号已被使用");
+                    $("#addStudentId").removeClass().addClass("form-control is-invalid");
 
                 }
             },
@@ -468,9 +461,7 @@ function addStudentIdOnblur() {
                 $("#addStudentId").removeClass();
                 $("#addStudentId").addClass("form-control is-invalid");
                 $("#addStudentIdFeedback").show();
-                $("#addStudentIdFeedback").removeClass();
-                $("#addStudentIdFeedback").addClass("invalid-feedback");
-                $("#addStudentIdFeedback").html("网络连接失败");
+                $("#addStudentIdFeedback").removeClass().addClass("invalid-feedback").html("网络连接失败");
             }
         });
     }
@@ -516,10 +507,8 @@ function addSubmit() {
             success:function (result) {
                 if(result.toString()==='true'){
                     alertSuccess($("#addStudentName").val()+"添加成功");
-                    $("#addStudentId").removeClass();
-                    $("#addStudentId").addClass("form-control");
-                    $("#addStudentName").removeClass();
-                    $("#addStudentName").addClass("form-control");
+                    $("#addStudentId").removeClass().addClass("form-control");
+                    $("#addStudentName").removeClass().addClass("form-control");
 
                     $("#tableHead").after("<tr name=\""+$("#addStudentId").val()+"\">\n    " +
                         "<td>\n        " +
@@ -566,5 +555,9 @@ function logOut() {
     $("html").fadeOut(150,function () {
         window.location.href=homeUrl+"/";
     })
+}
+
+function ifValidPassword(password) {
+    return password.length >= 8 && password.length <= 16;
 }
 
