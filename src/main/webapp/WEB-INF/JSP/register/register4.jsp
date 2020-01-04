@@ -14,6 +14,13 @@
         <h5>欢迎使用青年大学习提交系统！</h5>
         <p class="text-muted">(4/4)填写个人信息</p>
     </div>
+    <div class="col-12 col-xl-8 offset-xl-2 col-lg-8 offset-lg-2">
+        <div class="progress">
+            <div class="progress-bar" id="progress-bar" role="progressbar" style="width: ${progress}%" aria-valuenow="${progress}" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        <br>
+    </div>
+
     <div class="col-12 col-lg-8 offset-xl-2 offset-lg-2">
         <label for="adminRealName">管理员真实姓名<br>
             <small class="text-muted" id="adminRealNameLabel">输入真实姓名以便通过审核</small>

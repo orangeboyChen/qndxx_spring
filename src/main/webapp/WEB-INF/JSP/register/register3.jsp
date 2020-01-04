@@ -14,14 +14,22 @@
         <h5>欢迎使用青年大学习提交系统！</h5>
         <p class="text-muted">(3/4)填写联系方式</p>
     </div>
+    <div class="col-12 col-xl-8 offset-xl-2 col-lg-8 offset-lg-2">
+        <div class="progress">
+            <div class="progress-bar" id="progress-bar" role="progressbar" style="width: ${progress}%" aria-valuenow="${progress}" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        <br>
+    </div>
+
     <div class="col-sm-12 col-lg-8 col-12 offset-xl-2 offset-lg-2">
 
         <label for="adminEmail">管理员邮箱<br>
             <small class="text-muted" id="adminEmailLabel">输入正确的邮箱以接收审核邮件</small>
+            <small class="text-muted" id="adminEmailLabel2">（请使用国内邮箱，并将nowcent.cn加入域名白名单或将register@nowcent.cn加入白名单，否则将收不到邮件）</small>
         </label>
 
         <div class="input-group mb-3">
-            <input type="text" value="${email}" class="form-control" id="adminEmail" aria-describedby="getCode">
+            <input type="text" value="${email}" class="form-control" id="adminEmail" aria-describedby="getCode" onblur="checkEmail()">
             <div class="input-group-append">
                 <input type="button" class="btn btn-outline-secondary" value="获取验证码" id="getCode" onclick="getCode()">
             </div>
@@ -30,7 +38,7 @@
     </div>
     <div id="checkDiv" class="col-md-7 col-lg-6 offset-xl-2 offset-lg-2">
         <label for="code">验证码</label>
-        <input type="text" class="form-control col-6 col-sm-6" id="code">
+        <input type="text" class="form-control col-6 col-sm-6" id="code" onblur="checkCode()">
         <div id="codeFeedback"></div>
     </div>
     <div class="col-12 col-lg-8 offset-xl-2 offset-lg-2">

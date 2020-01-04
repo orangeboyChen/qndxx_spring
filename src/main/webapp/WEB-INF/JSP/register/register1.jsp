@@ -13,6 +13,13 @@
         <h2>注册</h2>
         <h5>欢迎使用青年大学习提交系统！</h5>
         <p class="text-muted">(1/4)核对学校信息</p>
+
+    </div>
+    <div class="col-12 col-xl-8 offset-xl-2 col-lg-8 offset-lg-2">
+        <div class="progress">
+            <div class="progress-bar" id="progress-bar" role="progressbar" style="width: ${progress}%" aria-valuenow="${progress}" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        <br>
     </div>
     <div class="col-lg-4 col-12 offset-xl-2 offset-lg-2">
         <label for="school">学校</label>

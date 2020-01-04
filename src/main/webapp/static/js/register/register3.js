@@ -1,17 +1,21 @@
 var regex = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
 function register3Forward() {
+    initProgress();
     if (checkIfEmpty($("#adminEmail").val())||checkIfEmpty($("#code").val())){
         if(checkIfEmpty($("#adminEmail").val())){
             setInputInvalid("#adminEmail","#adminEmailFeedback","管理员邮箱不能为空");
+            pn1(false);
         }
         if(checkIfEmpty($("#code").val())){
             setInputInvalid("#code","#codeFeedback","验证码不能为空");
             $("#code").addClass( "col-6 col-sm-6");
+            pn2(false);
         }
         return;
     }
     else if(!regex.test($("#adminEmail").val())){
         setInputInvalid("#adminEmail","#adminEmailFeedback","邮箱地址不正确");
+        pn1(false);
     }
 
     allLock();
@@ -26,6 +30,7 @@ function register3Forward() {
             if(result==2){
                 setInputInvalid("#code","#codeFeedback","验证码不正确");
                 $("#code").addClass( "col-6 col-sm-6");
+                pn2(false);
             }
             else{
                 $(".container").css("position","");
@@ -68,6 +73,7 @@ function register3Backward() {
 }
 
 function getCode() {
+    pn1(false);
     if(checkIfEmpty($("#adminEmail").val())){
         setInputInvalid("#adminEmail","#adminEmailFeedback","管理员邮箱不能为空");
     }
@@ -75,13 +81,16 @@ function getCode() {
         setInputInvalid("#adminEmail","#adminEmailFeedback","邮箱地址不正确");
     }
     else{
+        pn1(true);
         $("#adminEmail,#getCode").attr("disabled",true);
         $.post({
             url:rootUrl+"/ajax/getCode",
             data:{email:$("#adminEmail").val()},
             success:function (result) {
+                pn1(false);
                 if(result.toString()==='true'){
                     setInputValid("#adminEmail","#adminEmailFeedback","验证码发送成功");
+                    pn1(true);
                 }
                 else if(result.toString()==='EMAIL_HAS_BEEN_USED'){
                     setInputInvalid("#adminEmail","#adminEmailFeedback","该邮箱已被使用");
@@ -107,20 +116,32 @@ function getCode() {
 }
 
 function checkEmail() {
+    initProgress();
     if(checkIfEmpty($("#adminEmail").val())){
-        setInputInvalid("#adminEmail","#adminEmailFeedback","邮箱不能为空");
+        setInputInvalid("#adminEmail","#adminEmailFeedback","管理员邮箱不能为空");
+        pn1(false);
+    }
+    else if(!regex.test($("#adminEmail").val())){
+        setInputInvalid("#adminEmail","#adminEmailFeedback","邮箱地址不正确");
+        pn1(false);
     }
     else{
         setInputValid("#adminEmail","#adminEmailFeedback","");
+        pn1(true);
     }
 }
 
 function checkCode() {
+    initProgress();
     if(checkIfEmpty($("#code").val())){
-        setInputInvalid("#code","#codeFeedback","邮箱不能为空");
+        setInputInvalid("#code","#codeFeedback","验证码不能为空");
+        $("#code").addClass( "col-6 col-sm-6");
+        pn2(false);
     }
     else{
-        setInputValid("#codeEmail","#codeEmailFeedback","");
+        setInputValid("#code","#codeEmailFeedback","");
+        $("#code").addClass( "col-6 col-sm-6");
+        pn2(true);
     }
 }
 
@@ -132,5 +153,11 @@ function allLock() {
 
 function allUnlock() {
     $("#adminEmail,#getCode,#code,#regist3Next,#regist3Previous").attr("disabled",false);
-
 }
+
+var ani1=0;
+var ani2=0;
+var MAX=66;
+
+var checkProgress = false;
+var preProgress=44;

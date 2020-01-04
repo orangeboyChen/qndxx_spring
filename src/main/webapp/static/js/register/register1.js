@@ -10,6 +10,7 @@ function register1Forward() {
     }
 
     allLock();
+
     $.post({
         url:rootUrl+"/register2",
         data:{
@@ -37,6 +38,10 @@ function register1Backward() {
     allLock();
     $.post({
         url:rootUrl,
+        data:{
+            school:$("#school").val(),
+            institution:$("#institution").val()
+        },
         success:function (data) {
             pageBackwardFadeOut(function () {
                 $(".container").css("position","");
@@ -56,12 +61,18 @@ function register1Backward() {
     });
 }
 
+
 function checkSchool() {
+    initProgress()
     if (checkIfEmpty($("#school").val())){
+        pn1(false);
+
         setInputInvalid("#school","#schoolFeedback","学校不能为空");
         return;
     }
     else{
+        pn1(true);
+
         $("#school").attr("disabled",true);
         $.post({
             url:rootUrl+"/ajax/checkSchool",
@@ -85,21 +96,33 @@ function checkSchool() {
 }
 
 function checkInstitution() {
+    initProgress()
     if (checkIfEmpty($("#school").val())||checkIfEmpty($("#institution").val())){
         if(checkIfEmpty($("#school").val())){
+            pn1(false);
+
             setInputInvalid("#school","#schoolFeedback","学校不能为空");
         }
         else{
+            pn1(true);
+
             setInputValid("#school","#schoolFeedback","");
         }
         if(checkIfEmpty($("#institution").val())){
+            pn2(false);
+
             setInputInvalid("#institution","#institutionFeedback","学院不能为空");
         }
         else{
+            pn2(true);
+
             setInputValid("#institution","#institutionFeedback","");
         }
     }
     else{
+        pn1(true);
+        pn2(true);
+
         $("#school").attr("disabled",true);
         $("#institution").attr("disabled",true);
         $.post({
@@ -142,3 +165,15 @@ function allLock(){
 function allUnlock(){
     $("#school,#institution,#regist1Next,#regist1Previous").attr("disabled",false);
 }
+
+
+var ani1=0;
+var ani2=0;
+var MAX=22;
+
+var checkProgress = false;
+var preProgress=0;
+
+
+
+
