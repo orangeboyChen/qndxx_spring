@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface StudentService {
     void setStudentCompleteState(Student student, boolean state);
-    void setStudentCompleted(Student student);
+    void setStudentCompleted(Student student,String picName);
     Student queryStudentById(String id, Group group);
     Student queryValidStudent(Student student, Group group);
     int getCompletedCount(Group group);

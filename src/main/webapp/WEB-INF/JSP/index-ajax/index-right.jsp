@@ -12,6 +12,6 @@
 <br>
 <br>
 <h4>最好用的<br>青年大学习提交系统</h4>
-<h6>迄今为止只有我一个人用的系统</h6>
+<h6>欢迎使用青年大学习提交系统</h6>
 <input type="button" class="btn btn-light col" value="注册" onclick="toRegister()">
 

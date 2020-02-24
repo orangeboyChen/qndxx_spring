@@ -2,10 +2,12 @@ package com.orangeboy.dao;
 
 import com.orangeboy.pojo.Register;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Mapper
+@Repository
 public interface RegistersDao {
     @Insert("insert into Registers(schoolId,school,institution,groupName,groupSec,email,realName,password,requestTime) " +
             "values (#{schoolId},#{school},#{institution},#{groupName},#{groupSec},#{email},#{realName},#{password},#{requestTime})")

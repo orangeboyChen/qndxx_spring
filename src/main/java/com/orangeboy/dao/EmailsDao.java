@@ -2,8 +2,10 @@ package com.orangeboy.dao;
 
 import com.orangeboy.pojo.Email;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Repository;
 
 @Mapper
+@Repository
 public interface EmailsDao {
     @Select("select * from Emails where email=#{email}")
     Email queryEmailByAddress(String email);

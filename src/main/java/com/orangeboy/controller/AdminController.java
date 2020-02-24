@@ -1,20 +1,25 @@
 package com.orangeboy.controller;
 
+import com.orangeboy.constant.FileConstant;
 import com.orangeboy.pojo.Admin;
 import com.orangeboy.pojo.Group;
 import com.orangeboy.pojo.Student;
 import com.orangeboy.service.AdminService;
 import com.orangeboy.service.GroupService;
 import com.orangeboy.service.StudentService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
+import java.io.*;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,6 +70,15 @@ public class AdminController {
         session.setAttribute("goodStudents",null);
         admin.getGroup().setNewStartTime();
         groupService.updateGroup(admin.getGroup());
+
+        List<Student> students = adminService.getAllStudents(admin);
+        for (Student student:students) {
+            String picName = student.getPicName();
+            if(picName==null||"".equals(picName.trim())) continue;
+            File file = new File(FileConstant.PATH+"/"+picName);
+            file.delete();
+        }
+
         return "true";
     }
 
@@ -74,6 +88,11 @@ public class AdminController {
         Admin admin=adminService.getAdminFromSession(session);
         Student student=studentService.queryStudentById(id,admin.getGroup());
         if(student!=null){
+            String picName = student.getPicName();
+            if(!(picName==null||"".equals(picName.trim()))){
+                File file = new File(FileConstant.PATH+"/"+picName);
+                file.delete();
+            }
             studentService.removeStudent(student);
             return "true";
         }
@@ -239,6 +258,32 @@ public class AdminController {
         Admin admin=adminService.getAdminFromSession(session);
         adminService.removeGroupStudents(admin.getGroup());
         return "true";
+    }
+
+    @RequestMapping("/download/{id}")
+    public String download(@PathVariable("id")String id, HttpSession session, HttpServletResponse response) throws IOException {
+        Student student = studentService.queryStudentById(id,((Admin)session.getAttribute("admin")).getGroup());
+        String picName = student.getPicName();
+        String path = FileConstant.PATH + "/" + picName;
+
+        response.reset();
+        response.setHeader("Content-Disposition","attachment;fileName="
+                + URLEncoder.encode(student.getName()
+                +"-"+student.getId()
+                +"的截图"+"."+student.getPicName().substring(student.getPicName().lastIndexOf('.') + 1), "UTF-8"));
+        File file = new File(path);
+        InputStream inputStream = new FileInputStream(file);
+        OutputStream outputStream = response.getOutputStream();
+        byte[] b = new byte[25000000];
+        int index = 0;
+        while((index = inputStream.read(b)) != -1){
+            outputStream.write(b,0,index);
+            outputStream.flush();
+        }
+        outputStream.close();
+        inputStream.close();
+        return null;
+
     }
 
 }

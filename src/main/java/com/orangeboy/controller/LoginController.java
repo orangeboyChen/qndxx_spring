@@ -7,9 +7,14 @@ import com.orangeboy.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.net.http.HttpResponse;
 import java.util.List;
 
 @Controller
@@ -44,13 +49,21 @@ public class LoginController {
         if(student!=null){
             model.addAttribute("groupSec",student.getGroupSec());
         }
-
+        else {
+            Student hasDoneStudent = (Student) session.getAttribute("hasDoneStudent");
+            if(hasDoneStudent!=null){
+                model.addAttribute("groupSec",hasDoneStudent.getGroupSec());
+            }
+        }
         return "index";
     }
 
     @RequestMapping("/Login")
     public String login(Student student, String groupSec, HttpSession session,Model model){
-        if(student==null) return "fail";
+        if(student==null||groupSec==null) {
+            model.addAttribute("msg","别皮了哦");
+            return "fail";
+        }
         if("superadmin".equals(student.getId())&&"superadmin".equals(student.getName())){
             session.setAttribute("superAdmin","true");
             return "redirect:/superAdmin";
@@ -110,22 +123,25 @@ public class LoginController {
         if(validStudent!=null){
             if(validStudent.isCompleteState()){
                 student.setGroupSec(groupSec);
-                session.setAttribute("student", student);
+                session.setAttribute("hasDoneStudent", student);
                 model.addAttribute("info","你已经提交过了");
                 return "fail";
             }
             else if(!validStudent.isRequireState()){
                 student.setGroupSec(groupSec);
-                session.setAttribute("student", student);
+                session.setAttribute("hasDoneStudent", student);
                 model.addAttribute("info","你有特权不用做哦");
                 return "fail";
             }
             else {
-                studentService.setStudentCompleted(student);
+                if(session.getAttribute("hasDoneStudent")!=null){
+                    Student hasDoneStudent = (Student) session.getAttribute("hasDoneStudent");
+                    model.addAttribute("info","你和"+(hasDoneStudent.getName()+"有什么关系吗"));
+                    return "fail";
+                }
                 student.setGroupSec(groupSec);
-                session.setAttribute("student", student);
-                model.addAttribute("rank", studentService.getStudentRank(student));
-                return "success";
+                session.setAttribute("student",student);
+                return "upload";
             }
         }
         else{
@@ -166,6 +182,11 @@ public class LoginController {
     @RequestMapping("/indexRight")
     public String getIndexRight(){
         return "index-ajax/index-right";
+    }
+
+    @RequestMapping("/upload")
+    public String up(){
+        return "upload";
     }
 
 }

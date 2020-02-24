@@ -12,8 +12,16 @@ public class Student {
     private int school;
     private long lastCompleteTime;
     private int groupId;
-
+    private String picName;
     private String groupSec;
+
+    public String getPicName() {
+        return picName;
+    }
+
+    public void setPicName(String picName) {
+        this.picName = picName;
+    }
 
 
 

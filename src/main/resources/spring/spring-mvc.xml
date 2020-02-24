@@ -46,4 +46,14 @@
             <bean class="com.orangeboy.interceptor.SuperAdminInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/upload/**"/>
+            <mvc:mapping path="/success/**"/>
+            <bean class="com.orangeboy.interceptor.LoginInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+
 </beans>

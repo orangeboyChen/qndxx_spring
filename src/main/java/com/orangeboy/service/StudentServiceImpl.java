@@ -24,9 +24,10 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void setStudentCompleted(Student student){
+    public void setStudentCompleted(Student student,String picName){
         Group group=groupService.queryGroupById(student.getGroupId());
         student.setRank(getCompletedCount(group)+1);
+        student.setPicName(picName);
         setStudentCompleteState(student,true);
         student.setLastCompleteTime(System.currentTimeMillis());
         studentsDao.updateStudent(student);
