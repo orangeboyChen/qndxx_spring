@@ -76,10 +76,10 @@
                 <c:choose>
                     <c:when test="${goodStudents!=null}">
                         <table class="table table-hover" border="0px" width="400px" id="completedTable">
-                            <tr><th>姓名</th><th>时间</th></tr>
+                            <tr><th>姓名</th><th>时间</th><th>选项</th></tr>
                             <c:forEach var="goodStudent" items="${goodStudents}">
-                                <tr><td>${goodStudent.getName()}</td><td>${goodStudent.getTimeStr()}</td></tr>
-                            </c:forEach>
+                                <tr><td>${goodStudent.getName()}</td><td>${goodStudent.getTimeStr()}</td><td><a class="btn btn-primary" href="${pageContext.request.contextPath}/admin/download/${goodStudent.getId()}">下载截图</a> </td>
+                                    </c:forEach></tr>
                         </table>
                     </c:when>
                     <c:otherwise>

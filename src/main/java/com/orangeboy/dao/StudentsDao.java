@@ -5,10 +5,12 @@ import com.orangeboy.pojo.Student;
 import org.apache.ibatis.annotations.*;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Mapper
+@Repository
 public interface StudentsDao {
     @Insert("insert into Students(id, name, completeState, requireState, groupId,rank,completeCount) " +
             "values (#{id}, #{name}, 0 , 1, #{groupId},0,0)")
@@ -26,7 +28,7 @@ public interface StudentsDao {
     void removeStudentById(@Param("id")String id,@Param("group")Group group);
 
     @Update("update Students " +
-            "set completeState=#{completeState},requireState=#{requireState},lastCompleteTime=#{lastCompleteTime},rank=#{rank} "+
+            "set completeState=#{completeState},requireState=#{requireState},lastCompleteTime=#{lastCompleteTime},rank=#{rank},picName=#{picName} "+
             "where id=#{id} and groupId=#{groupId} ")
     void updateStudent(Student student);
 

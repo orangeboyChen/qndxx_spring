@@ -3,8 +3,10 @@ package com.orangeboy.dao;
 import com.orangeboy.pojo.Group;
 import com.orangeboy.pojo.School;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Repository;
 
 @Mapper
+@Repository
 public interface SchoolsDao {
     @Select("select * from Schools where schoolId=#{schoolId}")
     School querySchoolByGroup(Group group);

@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 @Mapper
+@Repository
 public interface AdminsDao {
     @Select("select * from Admins " +
             "where name=#{name} and password=#{password}")
