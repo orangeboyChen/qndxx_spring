@@ -1,11 +1,16 @@
 package com.orangeboy.pojo;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class Email {
     private String email;
     private String code;
     private long requestTime;
 
-    public Email(){}
 
     public Email(String email){
         this.email = email;
@@ -16,30 +21,6 @@ public class Email {
         this.email = email;
         this.code = code;
         requestTime = System.currentTimeMillis();
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public long getRequestTime() {
-        return requestTime;
-    }
-
-    public void setRequestTime(long requestTime) {
-        this.requestTime = requestTime;
     }
 
 

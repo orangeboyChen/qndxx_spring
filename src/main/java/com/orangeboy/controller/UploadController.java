@@ -4,6 +4,7 @@ import com.orangeboy.constant.FileConstant;
 import com.orangeboy.pojo.Student;
 import com.orangeboy.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;

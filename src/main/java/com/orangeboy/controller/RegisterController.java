@@ -210,4 +210,9 @@ public class RegisterController {
         else if(register.getInstitution()!=null) return "22";
         else return "0";
     }
+
+    @RequestMapping("/ajax/emailHelp")
+    public String emailHelp(){
+        return "register/emailHelp";
+    }
 }

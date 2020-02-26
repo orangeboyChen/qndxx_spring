@@ -8,17 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.net.http.HttpResponse;
 import java.util.List;
 
 @Controller
 public class LoginController {
+
     @Autowired
     private StudentService studentService;
     @Autowired
@@ -80,10 +76,8 @@ public class LoginController {
         if(group==null){
             if(!"".equals(groupSec.trim())){
                 group=groupService.queryGroupBySec(groupSec);
-                System.out.println(group==null);
                 if(group!=null) {
                     session.setAttribute("group", group);
-                    System.out.println(group.getGroupId());
                     group.setTimeStr();
                 }
                 else {
