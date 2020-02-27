@@ -8,6 +8,7 @@ import com.orangeboy.service.EmailService;
 import com.orangeboy.service.GroupService;
 import com.orangeboy.service.RegisterService;
 import com.orangeboy.service.SchoolService;
+import static com.orangeboy.constant.SessionConstant.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,9 +47,7 @@ public class RegisterController {
     private final String REQUEST_REGIST5 = "/register5";
 
     //session object
-    public static final String REGISTER="register";
-    public static final String SCHOOL="registerSchool";
-    private final String GROUP="registerGroup";
+
 
 
     @RequestMapping(REQUEST_REGIST)
@@ -95,7 +94,7 @@ public class RegisterController {
 //            }
             }
             register.setSchool(registerSchool);
-            session.setAttribute(SCHOOL,registerSchool);
+            session.setAttribute(REGISTER_SCHOOL,registerSchool);
         }
 
 
@@ -117,7 +116,7 @@ public class RegisterController {
                 model.addAttribute("info","小伙子别逗我哦");
                 return "fail";
             }
-            School registerSchool = (School) session.getAttribute(SCHOOL);
+            School registerSchool = (School) session.getAttribute(REGISTER_SCHOOL);
             if(registerSchool.isOldSchool()) {
                 Group sameGroup = groupService.queryGroupBySchoolAndName(groupName,registerSchool);
                 if(sameGroup!=null){
@@ -134,7 +133,7 @@ public class RegisterController {
 
             Group group=new Group(groupName, groupSec);
             register.setGroup(group);
-            session.setAttribute(GROUP,group);
+            session.setAttribute(REGISTER_GROUP,group);
         }
 
         model.addAttribute("email",register.getEmail());
@@ -199,7 +198,7 @@ public class RegisterController {
         registerService.addRegister(register);
         emailService.removeEmail(register.getEmail());
         session.setAttribute(REGISTER,null);
-        session.setAttribute(SCHOOL,null);
+        session.setAttribute(REGISTER_SCHOOL,null);
         return RESPONSE_REGIST5;
     }
 

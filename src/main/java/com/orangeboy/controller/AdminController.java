@@ -7,7 +7,7 @@ import com.orangeboy.pojo.Student;
 import com.orangeboy.service.AdminService;
 import com.orangeboy.service.GroupService;
 import com.orangeboy.service.StudentService;
-import org.apache.ibatis.annotations.Param;
+import static com.orangeboy.constant.SessionConstant.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,8 +34,8 @@ public class AdminController {
     private AdminService adminService;
 
     @RequestMapping("")
-    public String admin(HttpSession session, Model model, HttpServletResponse response) throws IOException {
-        Admin admin=(Admin)session.getAttribute("admin");
+    public String admin(HttpSession session, Model model) throws IOException {
+        Admin admin=(Admin)session.getAttribute(ADMIN);
         admin.setNewLoginTime();
         adminService.updateAdmin(admin);
         model.addAttribute("lastTime",session.getAttribute("adminLastTime"));
@@ -67,7 +67,7 @@ public class AdminController {
         adminService.initStudentAllCompleteState(admin);
         admin.getGroup().setNewStartTime();
         groupService.updateGroup(admin.getGroup());
-        session.setAttribute("goodStudents",null);
+        session.setAttribute(GOOD_STUDENTS,null);
         admin.getGroup().setNewStartTime();
         groupService.updateGroup(admin.getGroup());
 
@@ -142,7 +142,7 @@ public class AdminController {
 
     @RequestMapping("/changeInfo")
     @ResponseBody
-    public String chagneInfo(String groupName,String groupSec,HttpSession session){
+    public String changeInfo(String groupName, String groupSec, HttpSession session){
         Admin admin=adminService.getAdminFromSession(session);
          Group group=admin.getGroup();
          //group.setGroupName(groupName);
@@ -175,7 +175,6 @@ public class AdminController {
     @RequestMapping("/addStudent")
     @ResponseBody
     public String addStudent(Student student,HttpSession session){
-        System.out.println("id"+student.getId());
         Admin admin=adminService.getAdminFromSession(session);
         Student sameStudent=studentService.queryStudentById(student.getId(),admin.getGroup());
         if(sameStudent==null){
@@ -262,7 +261,7 @@ public class AdminController {
 
     @RequestMapping("/download/{id}")
     public String download(@PathVariable("id")String id, HttpSession session, HttpServletResponse response) throws IOException {
-        Student student = studentService.queryStudentById(id,((Admin)session.getAttribute("admin")).getGroup());
+        Student student = studentService.queryStudentById(id,((Admin)session.getAttribute(ADMIN)).getGroup());
         String picName = student.getPicName();
         String path = FileConstant.PATH + "/" + picName;
 
@@ -283,7 +282,6 @@ public class AdminController {
         outputStream.close();
         inputStream.close();
         return null;
-
     }
 
 }

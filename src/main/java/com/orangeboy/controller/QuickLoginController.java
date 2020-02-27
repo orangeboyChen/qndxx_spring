@@ -7,6 +7,7 @@ import com.orangeboy.pojo.School;
 import com.orangeboy.service.AdminService;
 import com.orangeboy.service.GroupService;
 import com.orangeboy.service.SchoolService;
+import static com.orangeboy.constant.SessionConstant.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,13 +35,12 @@ public class QuickLoginController {
             admin.setRandom("");
             adminService.updateAdmin(admin);
 
-
             Group group = groupService.queryGroupById(admin.getGroupId());
             School school = schoolService.querySchoolByGroup(group);
             group.setSchoolObject(school);
             admin.setGroup(group);
-            session.setAttribute("admin",admin);
-            session.setAttribute("group",group);
+            session.setAttribute(ADMIN,admin);
+            session.setAttribute(GROUP,group);
             return "addMutiple";
         }
 

@@ -1,10 +1,10 @@
 package com.orangeboy.constant;
 
 public class FileConstant {
-    public static String PATH = "D:\\testSpring";
+    public final static String PATH = "D:\\QNDXX";
 
     //ResponseBody
-    public static String NOT_A_SCREENSHOT = "NOT_A_SCREENSHOT";
-    public static String UNEXPECTED_ERROR = "UNEXPECTED_ERROR";
-    public static String SUCCESS = "SUCCESS";
+    public final static String NOT_A_SCREENSHOT = "NOT_A_SCREENSHOT";
+    public final static String UNEXPECTED_ERROR = "UNEXPECTED_ERROR";
+    public final static String SUCCESS = "SUCCESS";
 }

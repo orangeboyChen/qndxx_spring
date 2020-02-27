@@ -7,12 +7,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class LoginInterceptor implements HandlerInterceptor {
+import static com.orangeboy.constant.SessionConstant.HAS_DONE_STUDENT;
+import static com.orangeboy.constant.SessionConstant.STUDENT;
+
+public class UploadInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HttpSession session = request.getSession();
-        if(session.getAttribute("student")==null){
-            response.sendError(404);
+        if(session.getAttribute(STUDENT)==null&&session.getAttribute(HAS_DONE_STUDENT)==null){
+            response.sendError(403);
             return false;
         }
         return true;

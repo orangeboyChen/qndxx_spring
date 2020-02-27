@@ -1,4 +1,5 @@
 package com.orangeboy.pojo;
+import com.orangeboy.util.mUtil;
 import lombok.*;
 
 @Getter
@@ -27,6 +28,10 @@ public class Student {
     public Student(String name,int lastCompleteTime){
         this.name=name;
         this.lastCompleteTime=lastCompleteTime;
+    }
+
+    public String getTimeStr(){
+        return mUtil.getTimeStr(lastCompleteTime);
     }
 
 }
