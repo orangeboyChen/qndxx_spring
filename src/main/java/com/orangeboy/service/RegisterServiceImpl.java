@@ -1,5 +1,6 @@
 package com.orangeboy.service;
 
+import com.orangeboy.constant.SessionConstant;
 import com.orangeboy.controller.RegisterController;
 import com.orangeboy.dao.RegistersDao;
 import com.orangeboy.pojo.Register;
@@ -16,7 +17,7 @@ public class RegisterServiceImpl implements RegisterService {
 
     @Override
     public Register getRegisterFromSession(HttpSession session) {
-        return (Register) session.getAttribute(RegisterController.REGISTER);
+        return (Register) session.getAttribute(SessionConstant.REGISTER);
     }
 
     @Override

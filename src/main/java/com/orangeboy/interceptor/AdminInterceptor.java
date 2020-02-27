@@ -14,7 +14,7 @@ public class AdminInterceptor implements HandlerInterceptor {
         PageContextImpl context=new PageContextImpl();
         HttpSession session=httpServletRequest.getSession();
         if(session.getAttribute("admin")==null){
-            httpServletResponse.sendRedirect(httpServletRequest.getContextPath());
+            httpServletResponse.sendError(404);
             return false;
         }
         return true;

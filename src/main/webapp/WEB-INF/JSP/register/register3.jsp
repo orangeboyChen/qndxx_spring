@@ -25,7 +25,9 @@
 
         <label for="adminEmail">管理员邮箱<br>
             <small class="text-muted" id="adminEmailLabel">输入正确的邮箱以接收审核邮件</small>
-            <small class="text-muted" id="adminEmailLabel2">（请使用国内邮箱，并将nowcent.cn加入域名白名单或将register@nowcent.cn加入白名单，否则将收不到邮件）</small>
+            <small class="text-danger" id="adminEmailLabel2">（请使用国内邮箱，并将nowcent.cn加入域名白名单或将register@nowcent.cn加入白名单，否则将收不到邮件）</small>
+            <br>
+            <a data-toggle="modal" data-target="#helpModal" onclick="startHelpModal()" href="">我需要协助</a>
         </label>
 
         <div class="input-group mb-3">
@@ -45,6 +47,25 @@
         <div style="height: 1.5rem"></div>
         <input type="button" class="btn btn-primary float-left" value="上一步" id="register3Previous" onclick="register3Backward()">
         <input type="button" class="btn btn-primary float-right" value="下一步" id="register3Next" onclick="register3Forward()">
+    </div>
+
+    <div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" id="helpModal" aria-labelledby="helpModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="helpModalLabel">协助</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="helpContent">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>

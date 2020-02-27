@@ -1,17 +1,13 @@
 package com.orangeboy.controller;
 
-import com.orangeboy.pojo.Admin;
-import com.orangeboy.pojo.AjaxMessage;
 import com.orangeboy.pojo.Group;
-import com.orangeboy.pojo.Student;
 import com.orangeboy.service.AdminService;
 import com.orangeboy.service.GroupService;
 import com.orangeboy.service.SchoolService;
 import com.orangeboy.service.StudentService;
+import static com.orangeboy.constant.SessionConstant.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
@@ -32,11 +28,11 @@ public class AjaxController {
         Group group=groupService.queryGroupBySec(groupSec);
         if(group!=null){
             group.setSchoolObject(schoolService.querySchoolByGroup(group));
-            session.setAttribute("group",group);
+            session.setAttribute(GROUP,group);
             group.setTimeStr();
         }
         else{
-            session.setAttribute("group",null);
+            session.setAttribute(GROUP,null);
             return null;
         }
         Group groupCloned=(Group) group.clone();

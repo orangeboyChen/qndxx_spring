@@ -171,6 +171,18 @@ function allUnlock() {
     $("#adminEmail,#getCode,#code,#regist3Next,#regist3Previous").attr("disabled",false);
 }
 
+function startHelpModal() {
+    $.post({
+        url:rootUrl+"/ajax/emailHelp",
+        success:function (data) {
+                $("#helpContent").empty().html(data);
+        },
+        error:function () {
+            $("#helpContent").empty().html("<h6 class='text-danger'>网络未连接</h6>");
+        },
+    });
+}
+
 var ani1=0;
 var ani2=0;
 var MAX=66;

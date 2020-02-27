@@ -3,13 +3,13 @@ package com.orangeboy.controller;
 import com.orangeboy.pojo.*;
 import com.orangeboy.service.*;
 import com.orangeboy.util.mUtil;
+import static com.orangeboy.constant.SessionConstant.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 
-import static com.orangeboy.controller.RegisterController.SCHOOL;
 
 @RestController
 @RequestMapping("/register/ajax")
@@ -42,7 +42,7 @@ public class RegisterAjaxController {
     public String checkInstitution(String school, String institution, HttpSession session){
         School sameSchool = schoolService.querySchoolByData(school,institution);
         if(sameSchool!=null){
-            session.setAttribute(SCHOOL,sameSchool);
+            session.setAttribute(REGISTER_SCHOOL,sameSchool);
             return "true";
         }
         else {
@@ -58,8 +58,8 @@ public class RegisterAjaxController {
 
     @RequestMapping("/checkGroupName")
     public String checkGroupName(String groupName, HttpSession session){
-        Object o = session.getAttribute(SCHOOL);
-        School registerSchool = (School) session.getAttribute(SCHOOL);
+        Object o = session.getAttribute(REGISTER_SCHOOL);
+        School registerSchool = (School) session.getAttribute(REGISTER_SCHOOL);
         if(registerSchool.isOldSchool()) {
             Group sameGroup = groupService.queryGroupBySchoolAndName(groupName,registerSchool);
             if(sameGroup!=null){
@@ -126,4 +126,6 @@ public class RegisterAjaxController {
             return "true";
         }
     }
+
+
 }
