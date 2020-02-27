@@ -59,6 +59,7 @@ public class UploadController {
             return FileConstant.UNEXPECTED_ERROR;
         }
         studentService.setStudentCompleted(student,fileName);
+        student.setCompleteState(true);
         session.setAttribute(STUDENT, student);
         return FileConstant.SUCCESS;
     }
@@ -77,6 +78,10 @@ public class UploadController {
             model.addAttribute("rank",hasDoneStudent.getRank());
         }
         else {
+            if(!student.isCompleteState()){
+                response.sendError(403);
+                return null;
+            }
             model.addAttribute("title", "提交成功");
             model.addAttribute("rank", student.getRank());
             session.setAttribute(HAS_DONE_STUDENT, student);

@@ -29,7 +29,7 @@
             <h5>Internet Server Error</h5>
             <h6>系统运行错误</h6>
             <div style="height: 1rem"></div>
-            <a class="btn btn-primary" href="${pageContext.request.contextPath}">回到首页</a>
+            <a class="btn btn-primary" href="http://qndxx.nowcent.cn">回到首页</a>
         </div>
     </div>
 </div>
