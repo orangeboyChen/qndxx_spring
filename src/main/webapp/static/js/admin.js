@@ -620,6 +620,7 @@ function toAddMutiple() {
     });
 }
 
+
 function logOut() {
     $.post({
         url:rootUrl+"/logOut",
