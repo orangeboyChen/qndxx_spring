@@ -16,15 +16,23 @@
     <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/addMutiple.js"></script>
+    <link href="https://cdn.bootcss.com/font-awesome/5.12.1/css/all.min.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
 </head>
 <body>
+<nav class="navbar navbar-dark bg-dark sticky-top">
+    <div class="justify-content">
+        <button class="btn btn-outline-primary my-2 my-sm-0" onclick="cancelToAdmin()">
+            <i class="fa fa-chevron-left d-inline color-primary" aria-hidden="true"></i>
+            <p class="d-inline color-primary">返回</p>
+        </button>
+        <span class="navbar-brand" style="margin-left: 0.5rem;">青年大学习在线提交</span>
+    </div>
+</nav>
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <div style="height:1rem">
-            </div>
-            <input type="button" class="btn btn-primary" value="返回至管理端" onclick="cancelToAdmin()">
+
 
             <div style="height:1rem">
             </div>
@@ -84,6 +92,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal" id="submitCancelledBtn" onclick="cancelModal()">返回</button>
                     <input type="button" class="btn btn-primary" onclick="submit()" id="modalSubmittedBtn" value="确定">
+                    <br><br>
                 </div>
             </div>
         </div>

@@ -20,9 +20,7 @@
     <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/admin.js"></script>
 </head>
-
 <body>
-
 <div class="container">
     <div id="alertDiv" style="height: 0px;position: sticky;z-index: 9999;top:10px;display: none;">
         <div class="alert alert-success alert-dismissible fade show" style="position:sticky;" id="alert">
@@ -196,6 +194,8 @@
         </div>
     </div>
 </div>
+
+
 </div>
 </body>
 </html>

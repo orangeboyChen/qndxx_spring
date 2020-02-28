@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -45,6 +44,8 @@ public class LoginController {
 //        model.addAttribute("badStudents",badStudents);
 //        model.addAttribute("goodStudentsCount",goodStudents.size());
 //        model.addAttribute("badStudentsCount",badStudents.size());
+//        if(true) return "admin/adminBase";
+
         Student student = (Student) session.getAttribute(STUDENT);
         if(student!=null){
             model.addAttribute("groupSec",student.getGroupSec());
@@ -187,5 +188,7 @@ public class LoginController {
     public String up(){
         return "upload";
     }
+
+
 
 }

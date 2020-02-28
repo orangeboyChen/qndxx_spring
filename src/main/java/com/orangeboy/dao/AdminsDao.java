@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AdminsDao {
     @Select("select * from Admins " +
-            "where name=#{name} and password=#{password}")
+            "where name=#{name} and password=#{password} and groupId=#{groupId}")
     Admin queryAdmin(Admin admin);
 
     @Update("update Admins " +

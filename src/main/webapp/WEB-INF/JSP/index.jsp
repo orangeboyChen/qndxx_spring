@@ -18,6 +18,7 @@
     <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/index.js"></script>
+    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/index.css">
     <title>青年大学习在线提交</title>
 </head>
 <body>
@@ -27,10 +28,14 @@
             <form id="form1" name="form1" method="post" action="${pageContext.request.contextPath}/Login">
                 <div style="height:4rem"></div>
                 <h2 class="title">青年大学习在线提交</h2>
-                <div id="saying" style="display: none">
-                    <p id="groupStartTime"></p>
-                    <h4>团支书寄语：</h4>
+                <div id="saying" style="display: none" class="bs-callout bs-callout-info">
+                    <h4>团支书寄语</h4>
                     <blockquote></blockquote>
+                    <p id="groupStartTime" class="text-muted"></p>
+                </div>
+                <div></div>
+                <div id="helpDiv" class="bs-callout bs-callout-info">
+                    <p id="helpMsg" class="text">Tips: 请截图后提交</p>
                 </div>
 
 

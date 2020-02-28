@@ -209,6 +209,6 @@ function cancelModal() {
 
 function cancelToAdmin() {
     $("html").fadeOut(150,function () {
-        window.location.href = rootUrl;
+        window.location.href = rootUrl + "#4";
     });
 }
