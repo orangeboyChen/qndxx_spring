@@ -2,10 +2,12 @@ package com.orangeboy.pojo;
 
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class Email {
     private String email;
     private String code;

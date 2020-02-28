@@ -11,6 +11,12 @@ function getGroupBySec(obj) {
                 $("#groupSecFeedback").addClass("invalid-feedback");
                 $("#groupSecFeedback").html("没有找到相应的班级");
                 $("#saying").css("display","none");
+
+                $("#helpMsg").html("如果你没有班级代号，请联系团支书获取");
+                $("#helpDiv")
+                    .removeClass()
+                    .addClass("bs-callout bs-callout-danger")
+                    .css("display","block");
                 $("#rank").fadeOut(150,function () {
                     $("#rank").load($("#requestUrl").val() + "/indexRight","",function () {
                         $("#rank").fadeIn(150);
@@ -26,6 +32,7 @@ function getGroupBySec(obj) {
                 $("#groupSecFeedback").html("已找到班级："+data.school+data.institution+"-"+data.groupName);
                 $("#groupId").val(data.groupId);
                 $("#saying").css("display","block");
+                $("#helpDiv").css("display","none");
                 $("blockquote").html(data.saying);
                 $("#rank").fadeOut(150,function () {
                     $("#rank").load($("#requestUrl").val() + "/rankTable","",function () {

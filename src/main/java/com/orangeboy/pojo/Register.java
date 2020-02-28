@@ -7,6 +7,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
+@NoArgsConstructor
 public class Register {
     private int no;
     private int schoolId=-1;

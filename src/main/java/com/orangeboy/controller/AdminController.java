@@ -42,7 +42,7 @@ public class AdminController {
         model.addAttribute("group",admin.getGroup());
         model.addAttribute("goodStudents",adminService.queryCompletedStudents(admin));
         model.addAttribute("studentsList",adminService.getAllStudents(admin));
-        return "admin";
+        return "admin/adminBase";
     }
 
     @RequestMapping("/setSaying")
@@ -281,6 +281,13 @@ public class AdminController {
         }
         outputStream.close();
         inputStream.close();
+        return null;
+    }
+
+    @RequestMapping("/logOut")
+    @ResponseBody
+    public String logOut(HttpSession session){
+        session.setAttribute(ADMIN,null);
         return null;
     }
 

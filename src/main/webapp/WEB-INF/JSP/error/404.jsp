@@ -29,7 +29,7 @@
             <h5>你要查找的信息不存在</h5>
             <p>如有疑问，请联系管理员</p>
             <div style="height: 1rem"></div>
-            <a class="btn btn-primary" href="${pageContext.request.contextPath}">回到首页</a>
+            <a class="btn btn-primary" href="http://qndxx.nowcent.cn">回到首页</a>
         </div>
     </div>
 </div>
