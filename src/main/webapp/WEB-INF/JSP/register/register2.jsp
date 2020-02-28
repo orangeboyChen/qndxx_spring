@@ -1,4 +1,4 @@
-<%--
+<%@ page import="java.util.Date" %><%--
   Created by IntelliJ IDEA.
   User: chene
   Date: 2020/1/1
@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/register/register2.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/register/register2.js?v=<%=new Date().getTime()%>"></script>
 <div class="row">
     <div class="col-12 col-xl-8 offset-xl-2 col-lg-8 offset-lg-2">
         <div style="height: 3rem"></div>

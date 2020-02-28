@@ -10,11 +10,15 @@
 <div class="row">
     <div class="col-12 col-lg-7">
         <h2>更改名单</h2><br>
-        <h4 class="d-inline"><span class="badge badge-success" id="requiredCount">${requiredStudentCount}</span><small> 人需要学习</small></h4>
-        <br><br>
+        <div class="bs-callout bs-callout-success">
+            <h5 class="d-inline text-dark"><span class="text-success" id="requiredCount">${requiredStudentCount}</span> 人需要学习</h5>
+        </div>
     </div>
     <div class="col col-lg-7 col-xl-7">
+        <div style="height: 1rem"></div>
         <input class="btn btn-primary" type="button" value="添加成员" id="showAddStudent" data-toggle="collapse" data-target="#addStudent">
+        <input class="btn btn-outline-secondary" type="button" name="ck" id="ck" value="全部需要完成" onClick="allRequireYes()">
+        <input class="btn btn-light float-right text-danger" type="button" id="deleteOn" value="显示危险指令" onClick="dangerOn()">
         <div id="addStudent" class="collapse">
             <div style="height: 1rem"></div>
             <div class="card">
@@ -32,9 +36,7 @@
             </div>
             <div style="height: 1rem"></div>
         </div>
-        <div style="height: 0.5rem"></div>
-        <input class="btn btn-secondary" type="button" name="ck" id="ck" value="全部需要完成" onClick="allRequireYes()">
-        <input class="btn btn-danger float-right" type="button" id="deleteOn" value="显示危险指令" onClick="dangerOn()">
+
         <div style="height: 0.5rem"></div>
 
         <table class="table table-hover" border="0px" width="400px">
@@ -62,7 +64,7 @@
                         </c:choose>
                     </td>
                     <td style="vertical-align: middle;display: none;" name="deleteTd" class="align-items-center">
-                        <input type="button" class="btn btn-danger btn-sm" value="删除" name="delete" id="${student.getId()}" onclick="startModal(this)" style="vertical-align: middle;"/>
+                        <input type="button" class="btn btn-outline-danger btn-sm" value="删除" name="delete" id="${student.getId()}" onclick="startModal(this)" style="vertical-align: middle;"/>
                     </td>
                 </tr>
             </c:forEach>

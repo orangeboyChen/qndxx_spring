@@ -1,4 +1,4 @@
-<%--
+<%@ page import="java.util.Date" %><%--
   Created by IntelliJ IDEA.
   User: chene
   Date: 2020/2/27
@@ -17,7 +17,15 @@
     <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js/admin.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/admin.js?v=<%=new Date().getTime()%>"></script>
+    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/index.css">
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=8">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="Cache" content="no-cache">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-collapse sticky-top" id="navbar">

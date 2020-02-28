@@ -1,4 +1,4 @@
-<%--
+<%@ page import="java.util.Date" %><%--
   Created by IntelliJ IDEA.
   User: chene
   Date: 2020/1/1
@@ -16,7 +16,7 @@
     <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js/register/register.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/register/register.js?v=<%=new Date().getTime()%>"></script>
 
 
 </head>

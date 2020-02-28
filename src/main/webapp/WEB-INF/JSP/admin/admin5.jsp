@@ -14,7 +14,7 @@
         <h5>班级信息</h5>
         <div style="height: 0.5rem"></div>
         <div class="doneList">
-            <table class="table table-hover" border="0px" width="400px">
+            <table class="table table-hover" width="400rem">
                 <tr><td width="100rem">学校</td><td>${group.getSchool()}</td></tr>
                 <tr><td>学院</td><td>${group.getInstitution()}</td></tr>
                 <tr><td>班级</td><td>${group.getGroupName()}</td></tr>
@@ -24,9 +24,8 @@
                         <input type="hidden" id="groupSecInput" class="form-control">
                     </td></tr>
             </table>
-            <input type="button" class="btn btn-primary" value="更改信息" id="changeInfo" onclick="showSubmitInfo()"/>
+            <input type="button" class="btn btn-link" value="更改班级信息" id="changeInfo" onclick="showSubmitInfo()"/>
             <input type="hidden" class="btn btn-primary" value="提交" id="submitInfo" onclick="changeInfo()"/>
-
         </div>
         <br>
     </div>
@@ -34,9 +33,8 @@
     <div class="col-12 col-xl-6 col-lg-6">
         <h5>个人信息</h5>
         <div style="height: 0.5rem"></div>
-        <input type="button" class="btn btn-secondary" value="修改管理员密码" data-toggle="modal" data-target="#changePasswordModal"/>
-        <div style="height: 0.6rem"></div>
-        <input type="button" class="btn btn-danger" onclick="logOut()" value="退出登录"/>
+        <input type="button" class="btn btn-link" value="修改管理员密码" data-toggle="modal" data-target="#changePasswordModal"/><br>
+        <input type="button" class="btn btn-link text-danger" onclick="logOut()" value="退出登录"/>
 
     </div>
 

@@ -17,7 +17,7 @@
         <div class="input-group mb-3">
             <input type="text" class="form-control"  aria-label="sayingLabel" aria-describedby="button-addon2" name="sayingTxt" id="sayingTxt" value="${saying}">
             <div class="input-group-append">
-                <button class="btn btn-primary" type="button" id="button-addon2" name="saying" onclick="setSaying()">更改</button>
+                <button class="btn btn-outline-primary" type="button" id="button-addon2" name="saying" onclick="setSaying()">更改</button>
             </div>
         </div>
         <br>

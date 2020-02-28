@@ -156,8 +156,8 @@ public class LoginController {
         }
     }
 
-    @RequestMapping("/rankTable")
-    public String getRankTable(HttpSession session,Model model){
+    @RequestMapping("/rankTable/{args}")
+    public String getRankTable(@PathVariable("args") int args, HttpSession session,Model model){
         Group group=(Group)session.getAttribute(GROUP);
         if(group!=null){
             List<Student> badStudents=studentService.queryNotCompletedRequiredStudents(group);
@@ -172,6 +172,9 @@ public class LoginController {
             model.addAttribute("badStudents",badStudents);
             model.addAttribute("goodStudentsCount",goodStudents.size());
             model.addAttribute("badStudentsCount",badStudents.size());
+            if(args==1){
+                model.addAttribute("collapse","show");
+            }
             return "index-ajax/rank-table";
         }
         else{

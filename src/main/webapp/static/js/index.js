@@ -17,9 +17,14 @@ function getGroupBySec(obj) {
                     .removeClass()
                     .addClass("bs-callout bs-callout-danger")
                     .css("display","block");
+                $("#showMoreData").attr("type","hidden");
+                $("#registerBtn").attr("type","button");
                 $("#rank").fadeOut(150,function () {
                     $("#rank").load($("#requestUrl").val() + "/indexRight","",function () {
                         $("#rank").fadeIn(150);
+                        $("#showMoreData").fadeOut(150,function () {
+                            $("#registerBtn").fadeIn(150);
+                        });
                     });
                 });
                 $("#groupStartTime").html("");
@@ -34,9 +39,14 @@ function getGroupBySec(obj) {
                 $("#saying").css("display","block");
                 $("#helpDiv").css("display","none");
                 $("blockquote").html(data.saying);
+                $("#showMoreData").attr("type","button");
+                $("#registerBtn").attr("type","hidden");
                 $("#rank").fadeOut(150,function () {
-                    $("#rank").load($("#requestUrl").val() + "/rankTable","",function () {
+                    $("#rank").load($("#requestUrl").val() + "/rankTable/0","",function () {
                         $("#rank").fadeIn(150);
+                        $("#registerBtn").fadeOut(150,function () {
+                            $("#showMoreData").fadeIn(150);
+                        });
                     });
                 });
                 $("#groupStartTime").html("新的大学习已于"+data.timeStr+"开始");
@@ -85,9 +95,17 @@ function toRegister() {
 }
 
 function refreshRank() {
-    $("#rank").fadeOut(150,function () {
-        $("#rank").load($("#requestUrl").val() + "/rankTable","",function () {
-            $("#rank").fadeIn(150);
-        });
+    // $("#rank").fadeOut(150,function () {
+    //     $("#rank").load($("#requestUrl").val() + "/rankTable","",function () {
+    //         $("#rank").fadeIn(150);
+    //     });
+    // });
+    $.get({
+        url: $("#requestUrl").val() + "/rankTable/1",
+        success: function (result) {
+            $("#rank").fadeOut(150,function () {
+                $("#rank").html(result).fadeIn(150);
+            });
+        }
     });
 }

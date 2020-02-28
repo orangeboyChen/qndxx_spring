@@ -11,10 +11,11 @@
 <div class="row">
     <div class="col-12 col-lg-7">
         <h2>已完成名单</h2><br>
-        <h4 class="d-inline"><span class="badge badge-success">${goodStudents==null?0:goodStudents.size()}</span><small> 人已完成学习</small></h4>
-        <button class="btn btn-secondary float-right btn-sm" onclick="toCompletedList()">刷新</button>
+        <div class="bs-callout bs-callout-success">
+            <h5 class="d-inline text-dark"><span class="text-success">${goodStudents==null?0:goodStudents.size()}</span> 人已完成学习</h5>
+            <button class="btn btn-outline-success float-right btn-sm" onclick="toCompletedList()">刷新</button>
+        </div>
         <br>
-        <div style="height: 0.5rem"></div>
     </div>
     <div class="col col-lg-7 col-xl-7">
         <div class="doneList">
@@ -23,7 +24,7 @@
                     <table class="table table-hover" border="0px" width="400px" id="completedTable">
                         <tr><th>姓名</th><th>时间</th><th>选项</th></tr>
                         <c:forEach var="goodStudent" items="${goodStudents}">
-                        <tr><td>${goodStudent.getName()}</td><td>${goodStudent.getTimeStr()}</td><td><a class="btn btn-primary btn-sm" href="${pageContext.request.contextPath}/admin/download/${goodStudent.getId()}">下载截图</a> </td>
+                        <tr><td>${goodStudent.getName()}</td><td>${goodStudent.getTimeStr()}</td><td><a class="btn-link" href="${pageContext.request.contextPath}/admin/download/${goodStudent.getId()}">下载截图</a> </td>
                             </c:forEach></tr>
                     </table>
                 </c:when>

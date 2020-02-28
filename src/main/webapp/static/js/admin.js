@@ -575,7 +575,7 @@ function addSubmit() {
                         '</div>' +
                         '</td>' +
                         '<td style="vertical-align: middle;display: ' + deleteDisplay + ';" name="deleteTd" class="align-items-center" name="deleteTd">' +
-                        '<input type="button" class="btn btn-danger btn-sm" value="删除" name="delete" id="' + $('#addStudentId').val() +'" onclick="startModal(this)" style="vertical-align: middle;"/>' +
+                        '<input type="button" class="btn btn-outline-danger btn-sm" value="删除" name="delete" id="' + $('#addStudentId').val() +'" onclick="startModal(this)" style="vertical-align: middle;"/>' +
                         '</td>' +
                         '</tr>');
 

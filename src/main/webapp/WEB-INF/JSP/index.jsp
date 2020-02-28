@@ -1,3 +1,4 @@
+<%@ page import="java.util.Date" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -17,19 +18,30 @@
     <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js/index.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/index.js?v=<%=new Date().getTime()%>"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=8">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="Cache" content="no-cache">
+
     <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/index.css">
     <title>青年大学习在线提交</title>
 </head>
 <body>
+<nav class="navbar navbar-dark bg-dark sticky-top">
+    <div class="justify-content">
+        <span class="navbar-brand">青年大学习在线提交</span>
+    </div>
+</nav>
+
 <div class="container">
     <div class="row">
         <div class="col-sm-12 offset-lg-1 offset-md-1 col-lg-5 col-md-6">
             <form id="form1" name="form1" method="post" action="${pageContext.request.contextPath}/Login">
-                <div style="height:4rem"></div>
-                <h2 class="title">青年大学习在线提交</h2>
                 <div id="saying" style="display: none" class="bs-callout bs-callout-info">
-                    <h4>团支书寄语</h4>
+                    <h5 class="text-info">团支书寄语</h5>
                     <blockquote></blockquote>
                     <p id="groupStartTime" class="text-muted"></p>
                 </div>
@@ -50,6 +62,9 @@
                 <input id="name" class="form-control" type="text" name="name"/>
                 <br>
                 <input type="submit" class="btn btn-primary col">
+                <div style="height: 0.5rem"></div>
+                <input class="btn btn-outline-secondary col" type="hidden" value="查看更多数据" id="showMoreData" data-toggle="collapse" data-target="#moreData">
+                <input type="button" class="btn btn-dark col" value="注册" id="registerBtn" onclick="toRegister()">
             </form>
 
         </div>
