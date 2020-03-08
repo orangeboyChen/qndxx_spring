@@ -19,6 +19,7 @@
     </div>
     <div class="col col-lg-7 col-xl-7">
         <div class="doneList">
+            <a class="btn btn-outline-primary float-right" href="${pageContext.request.contextPath}/admin/downloadAll">下载全部截图</a><br><br>
             <c:choose>
                 <c:when test="${goodStudents!=null}">
                     <table class="table table-hover" border="0px" width="400px" id="completedTable">

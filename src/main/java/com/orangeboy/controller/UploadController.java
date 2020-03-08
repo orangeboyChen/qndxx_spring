@@ -53,7 +53,7 @@ public class UploadController {
         String fileName = UUID.randomUUID().toString() + "." + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf('.')+1);
         if(!realPath.exists()) realPath.mkdir();
         try {
-            file.transferTo(new File(realPath + "/" + fileName));
+            file.transferTo(new File(path + fileName));
         }catch (Exception e){
             System.out.println(e);
             return FileConstant.UNEXPECTED_ERROR;

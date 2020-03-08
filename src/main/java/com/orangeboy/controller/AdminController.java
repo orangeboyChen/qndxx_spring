@@ -7,6 +7,9 @@ import com.orangeboy.pojo.Student;
 import com.orangeboy.service.AdminService;
 import com.orangeboy.service.GroupService;
 import com.orangeboy.service.StudentService;
+
+import static com.orangeboy.constant.FileConstant.PATH;
+import static com.orangeboy.constant.FileConstant.TEMP_PATH;
 import static com.orangeboy.constant.SessionConstant.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +25,9 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 @Controller
 @RequestMapping("/admin")
@@ -75,7 +81,7 @@ public class AdminController {
         for (Student student:students) {
             String picName = student.getPicName();
             if(picName==null||"".equals(picName.trim())) continue;
-            File file = new File(FileConstant.PATH+"/"+picName);
+            File file = new File(PATH+"/"+picName);
             file.delete();
         }
 
@@ -90,7 +96,7 @@ public class AdminController {
         if(student!=null){
             String picName = student.getPicName();
             if(!(picName==null||"".equals(picName.trim()))){
-                File file = new File(FileConstant.PATH+"/"+picName);
+                File file = new File(PATH+"/"+picName);
                 file.delete();
             }
             studentService.removeStudent(student);
@@ -263,7 +269,7 @@ public class AdminController {
     public String download(@PathVariable("id")String id, HttpSession session, HttpServletResponse response) throws IOException {
         Student student = studentService.queryStudentById(id,((Admin)session.getAttribute(ADMIN)).getGroup());
         String picName = student.getPicName();
-        String path = FileConstant.PATH + "/" + picName;
+        String path = PATH + picName;
 
         response.reset();
         response.setHeader("Content-Disposition","attachment;fileName="
@@ -273,7 +279,7 @@ public class AdminController {
         File file = new File(path);
         InputStream inputStream = new FileInputStream(file);
         OutputStream outputStream = response.getOutputStream();
-        byte[] b = new byte[25000000];
+        byte[] b = new byte[1024];
         int index = 0;
         while((index = inputStream.read(b)) != -1){
             outputStream.write(b,0,index);
@@ -288,6 +294,56 @@ public class AdminController {
     @ResponseBody
     public String logOut(HttpSession session){
         session.setAttribute(ADMIN,null);
+
+        return null;
+    }
+
+    @RequestMapping("/downloadAll")
+    public String downloadAll(HttpSession session, HttpServletResponse response) throws IOException {
+        Admin admin = (Admin) session.getAttribute(ADMIN);
+        List<Student> students = adminService.queryCompletedStudents(admin);
+
+        String zipName = UUID.randomUUID().toString() + ".zip";
+
+        File tempDir = new File(TEMP_PATH);
+        if(!tempDir.exists()) tempDir.mkdir();
+        ZipOutputStream zipOutputStream = new ZipOutputStream(new FileOutputStream(TEMP_PATH + zipName));
+        for (Student student:students) {
+            InputStream inputStream = new FileInputStream(PATH + student.getPicName());
+            zipOutputStream.putNextEntry(new ZipEntry(
+                    student.getName()
+                            +"-"+student.getId()
+                            +"的截图"+"."+student.getPicName().substring(student.getPicName().lastIndexOf('.') + 1)
+            ));
+            int temp = 0;
+            while((temp = inputStream.read())!=-1){
+                zipOutputStream.write(temp);
+            }
+            inputStream.close();
+        }
+        zipOutputStream.close();
+
+
+        response.reset();
+        response.setHeader("Content-Disposition","attachment;fileName="
+                + URLEncoder.encode(admin.getGroup().getGroupName()
+                + "的全部截图("
+                + studentService.getCompletedCount(admin.getGroup())
+                + "张).zip"
+                , "UTF-8"));
+
+        File file = new File(TEMP_PATH + zipName);
+        InputStream inputStream = new FileInputStream(file);
+        OutputStream outputStream = response.getOutputStream();
+        byte[] b = new byte[1024];
+        int index = 0;
+        while((index = inputStream.read(b)) != -1){
+            outputStream.write(b,0,index);
+            outputStream.flush();
+        }
+        outputStream.close();
+        inputStream.close();
+        file.delete();
         return null;
     }
 
