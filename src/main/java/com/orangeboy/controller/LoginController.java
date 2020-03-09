@@ -136,8 +136,10 @@ public class LoginController {
             else {
                 if(session.getAttribute(HAS_DONE_STUDENT)!=null){
                     Student hasDoneStudent = (Student) session.getAttribute(HAS_DONE_STUDENT);
-                    model.addAttribute("info","你和" + hasDoneStudent.getName()+"有什么关系吗");
-                    return "fail";
+                    if(!validStudent.getId().equals(hasDoneStudent.getId())){
+                        model.addAttribute("info","你和" + hasDoneStudent.getName()+"有什么关系吗");
+                        return "fail";
+                    }
                 }
                 student.setGroupSec(groupSec);
                 session.setAttribute(STUDENT,student);
