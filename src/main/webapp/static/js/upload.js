@@ -12,8 +12,20 @@ function upload(){
         $("#tip").html("别皮哦");
         return 0;
     }
-    if($("#inputGroupFile04")[0].files[0].size>1024*1024*10){
-        $("#tip").html("超过10M的文件无法上传哦");
+
+    let fileName = $("#inputGroupFile04")[0].files[0].name;
+    let fileType = fileName.substring(fileName.indexOf('.') + 1, fileName.length);
+    console.log(fileType);
+    let acceptType = ['zip', 'rar', 'doc', 'docx', 'pdf'];
+
+
+    if(acceptType.indexOf(fileType) < 0){
+        $("#tip").html("仅支持上传zip rar doc docx pdf格式的文件");
+        return 0;
+    }
+
+    if($("#inputGroupFile04")[0].files[0].size>1024*1024*100){
+        $("#tip").html("超过100M的文件无法上传哦");
         return 0;
     }
     $("#tip").html("");

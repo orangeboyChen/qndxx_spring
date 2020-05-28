@@ -11,7 +11,7 @@
     <div class="col-12 col-xl-8 offset-xl-2 col-lg-8 offset-lg-2">
         <div style="height: 3rem"></div>
         <h2>注册</h2>
-        <h5>欢迎使用青年大学习提交系统！</h5>
+        <h5>欢迎使用青年作业提交系统！</h5>
         <p class="text-muted">完成</p>
         <div class="progress">
             <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>

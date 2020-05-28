@@ -119,6 +119,8 @@ public class LoginController {
         }
 
         student.setGroupId(group.getGroupId());
+        System.out.println(student.getId());
+        System.out.println(group.getGroupId());
         Student validStudent = studentService.queryValidStudent(student,group);
         System.out.println(validStudent==null);
         if(validStudent!=null){

@@ -26,7 +26,7 @@
             <i class="fa fa-chevron-left d-inline color-primary" aria-hidden="true"></i>
             <p class="d-inline color-primary">返回</p>
         </button>
-        <span class="navbar-brand" style="margin-left: 0.5rem;">青年大学习在线提交</span>
+        <span class="navbar-brand" style="margin-left: 0.5rem;">青年作业在线提交</span>
     </div>
 </nav>
 <div class="container">

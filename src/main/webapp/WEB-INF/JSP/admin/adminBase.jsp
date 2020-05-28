@@ -10,7 +10,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>青年大学习在线提交-管理员</title>
+    <title>青年作业在线提交-管理员</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
@@ -25,7 +25,7 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation" style="margin-right: 0.5rem">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <span class="navbar-brand">青年大学习在线提交</span>
+        <span class="navbar-brand">青年作业在线提交</span>
     </div>
     <div class="collapse navbar-collapse" id="navbarToggler">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
@@ -33,7 +33,7 @@
                 <a class="nav-link" href="javascript:toIndex()">概述<span class="sr-only"></span></a>
             </li>
             <li class="nav-item" id="toSettingLi">
-                <a class="nav-link" href="javascript:toSetting()">设置大学习<span class="sr-only"></span></a>
+                <a class="nav-link" href="javascript:toSetting()">设置作业<span class="sr-only"></span></a>
             </li>
             <li class="nav-item" id="toCompletedListLi">
                 <a class="nav-link" href="javascript:toCompletedList()">已完成名单</a>

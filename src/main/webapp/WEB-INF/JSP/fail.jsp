@@ -19,6 +19,11 @@
     <title>提交失败</title>
 </head>
 <body>
+<nav class="navbar navbar-dark bg-dark sticky-top">
+    <div class="justify-content">
+        <span class="navbar-brand">青年大学习在线提交</span>
+    </div>
+</nav>
 <div class="container">
     <div style="height:4rem"></div>
     <div class="row justify-content-center">

@@ -39,7 +39,7 @@ function getGroupBySec(obj) {
                         $("#rank").fadeIn(150);
                     });
                 });
-                $("#groupStartTime").html("新的大学习已于"+data.timeStr+"开始");
+                $("#groupStartTime").html("新的作业已于"+data.timeStr+"开始");
             }
         }
     });

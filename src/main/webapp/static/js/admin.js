@@ -215,14 +215,14 @@ function startModal(obj) {
     var todo=obj.name;
     switch (todo){
         case 'new':
-            $('#modalContent').html('你准备开启新的大学习。这意味着当前大学习所有完成的数据将会丢失。');
+            $('#modalContent').html('你准备开启新的老师。这意味着当前老师所有完成的数据将会丢失。');
             break;
         case 'delete':
             var name= $("h6[name='"+id+"']").text();
             $('#modalContent').html('你真的要删除'+name+'吗？你的良心不会痛吗？');
             break;
         case 'init':
-            $('#modalContent').html('你真的想要删掉所有人以体验删库的快感？');
+            $('#modalContent').html('你真的想要删掉所有人以体验删库？');
             break;
     }
     $('#makeSureModal').modal('show');

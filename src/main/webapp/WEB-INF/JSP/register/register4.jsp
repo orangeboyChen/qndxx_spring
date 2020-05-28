@@ -11,7 +11,7 @@
     <div class="col-12 col-xl-8 offset-xl-2 col-lg-8 offset-lg-2">
         <div style="height: 3rem"></div>
         <h2>注册</h2>
-        <h5>欢迎使用青年大学习提交系统！</h5>
+        <h5>欢迎使用青年作业提交系统！</h5>
         <p class="text-muted">(4/4)填写个人信息</p>
     </div>
     <div class="col-12 col-xl-8 offset-xl-2 col-lg-8 offset-lg-2">

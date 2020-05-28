@@ -16,7 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.orangeboy.constant.SessionConstant.*;
 
@@ -27,17 +29,28 @@ public class UploadController {
     @PostMapping("/uploadPic")
     @ResponseBody
     public String upload(@RequestParam("file") CommonsMultipartFile file, Model model,HttpSession session) {
-        String[] acceptTypes = {"image/jpeg","image/png","image/gif"};
-        String fileType = file.getContentType();
-        boolean flag = false;
-        for (String type:acceptTypes) {
-            if(type.equals(fileType)){
-                flag = true;
-                break;
-            }
-        }
+        String[] acceptTypes = {"pdf", "doc", "docx", "zip", "rar"};
+        String originFileName = file.getOriginalFilename();
 
-        if(!flag){
+        assert originFileName != null;
+        String fileType = originFileName.substring(originFileName.lastIndexOf('.') + 1);
+//        String fileContentType = file.getContentType();
+        AtomicBoolean flag = new AtomicBoolean(false);
+//        for (String type:acceptTypes) {
+//            if(type.equals(fileType)){
+//                flag = true;
+//                break;
+//            }
+//        }
+        Arrays.asList(acceptTypes).forEach(u -> {
+            if(u.equals(fileType)){
+                flag.set(true);
+            }
+        });
+
+
+
+        if(!flag.get()){
             model.addAttribute("msg","别皮了哦");
             session.setAttribute(FILE_PROCESS,null);
             return FileConstant.NOT_A_SCREENSHOT;

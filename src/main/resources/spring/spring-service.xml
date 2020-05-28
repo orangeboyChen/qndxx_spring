@@ -17,6 +17,6 @@
     <bean  id="multipartResolver" class="com.orangeboy.resolver.MultipartListenerResolver">
         <property name="defaultEncoding" value="UTF-8"/>
         <property name="maxInMemorySize" value="40960"/>
-        <property name="maxUploadSize" value="25000000"/>
+        <property name="maxUploadSize" value="999999999999"/>
     </bean>
 </beans>

@@ -16,7 +16,7 @@
                 <h5 class="card-title">完成人数</h5>
                 <h3 class="d-inline"><span class="badge badge-success">${completedCount}</span><small> 人</small></h3>
                 <p class="card-text text-muted">从${startTime}开始学习</p>
-                <a href="javascript:toSetting()" class="card-link">开始新的大学习</a>
+                <a href="javascript:toSetting()" class="card-link">开始新的作业</a>
                 <a href="javascript:toCompletedList()" class="card-link">看看谁交了</a>
             </div>
         </div>
